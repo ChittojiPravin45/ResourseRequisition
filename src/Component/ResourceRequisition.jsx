@@ -1,315 +1,576 @@
-import { Button, Grid, TextField, Typography } from "@mui/material";
 import React from "react";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
-import Select from "@mui/material/Select";
+import { useState } from "react";
+// import { MultiSelect } from "react-multi-select-component";
+import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 
 export const ResourceRequisition = () => {
-  return (
-    <div className="body">
-      <div className="imagecontainer">
-        <img
-          className="image"
-          src="https://www.wallpaperflare.com/static/9/941/297/architecture-buildings-city-city-lights-wallpaper-preview.jpg"
-          alt="BirlaSoft"
-        />
-      </div>
-      <div className="formcontainer">
-        <div className="form">
-          <Grid container>
-            <Grid item xs={4.5}></Grid>
-            <Grid item xs={3}>
-              <h2>Resource Requirement</h2>
-            </Grid>
-            <Grid item xs={1.5}></Grid>
-            <Grid item xs={3}>
-              <img
-                className="logoimg"
-                src="https://hiringsolutions.blob.core.windows.net/resumebank/cad925b0-5d59-4942-af4b-fda3948c3024/OrgLogo/birlasoft_owler_20170913_055353_original.png"
-                alt="BirlaSoft Logo"
-              />
-            </Grid>
-            <Grid item xs={10}></Grid>
-            <Grid item xs={1}>
-              <Button variant="contained" color="secondary">
-                New
-              </Button>
-            </Grid>
-            <Grid item xs={1}></Grid>
-          </Grid>
-          <br />
-          <br />
-          <Grid container>
-            <Grid item xs={4.5}></Grid>
-            <Grid item xs={3}>
-              {" "}
-              <TextField
-                label="Search Request Number"
-                variant="outlined"
-                type="text"
-                required
-              />
-            </Grid>
-            <Grid item xs={1}>
-              <Button variant="contained" color="primary">
-                Search
-              </Button>
-            </Grid>
-            <Grid item xs={3}></Grid>
-          </Grid>
+  const [selected, setSelected] = useState([]);
 
-          <form action="" className="form-main">
-            <Grid container>
-              <Grid item xs={0.5}></Grid>
-              <Grid item xs={1.5}>
-                <span>Created BY:-</span>
-              </Grid>
-              <Grid item xs={2}>
-                <TextField
-                  label="Employee ID"
-                  variant="outlined"
+  const options = [
+    {
+      value: "peroru",
+      label: "hsfdag",
+    },
+  ];
+  return (
+    <div className="container my-5">
+      <div className="text-center">
+        <h1 className="h1">Resourse Requirement</h1>
+      </div>
+      <div className="text-end">
+        <span className="birla">birla</span>
+        <span className="soft">soft</span>
+      </div>
+      <div className="row py-3">
+        <div className="col">
+          <form action="">
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <button className="col-sm-1 btn-outline-primary btn-sm ">
+                ADD
+              </button>
+              <lable className="col-sm-4 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">
+                Search Request No:
+              </lable>
+              <div className="col-sm-2">
+                <input type="text" className="form-control form-control-sm" />
+              </div>
+              <button type="submit" className="col-sm-1 btn btn-primary btn-sm">
+                <i className="fa fa-search"></i>
+              </button>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable"> Employee Name:</lable>
+              <div className="col-sm-3">
+                <input
                   type="text"
-                  required
+                  className="form-control form-control-sm"
+                  disabled
+                  placeholder="Employee Name"
                 />
-              </Grid>
-              <Grid item xs={2.5}>
-                <TextField
-                  label="Employee Name"
-                  variant="outlined"
+              </div>
+              <lable className="col-sm-2 col-form-lable">Created On:</lable>
+              <div className="col-sm-3">
+                <input
                   type="text"
-                  required
+                  className="form-control form-control-sm"
+                  disabled
                 />
-              </Grid>
-              <Grid item xs={1.5}></Grid>
-              <Grid item xs={1.5}>
-                <Typography variant="h6">Created on:-</Typography>
-              </Grid>
-              <Grid item xs={2}>
-                <TextField variant="outlined" type="date" required />
-              </Grid>
-            </Grid>
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
             <br />
-            <br />
-            <Grid container>
-              <Grid item xs={0.5}></Grid>
-              <Grid item xs={1.5}>
-                <span>Hiring Type:-</span>
-              </Grid>
-              <Grid item xs={2}>
-                <Select displayEmpty fullWidth="100%" label="Age">
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>C2C</MenuItem>
-                  <MenuItem value={20}>FTC</MenuItem>
-                  <MenuItem value={30}>FTE</MenuItem>
-                  <MenuItem value={30}>Pro-Active</MenuItem>
-                </Select>
-              </Grid>
-              <Grid item xs={3}></Grid>
-              <Grid item xs={1}></Grid>
-              <Grid item xs={1.5}>
-                <span>Position:-</span>
-              </Grid>
-              <Grid item xs={2}>
-                <TextField
-                  variant="outlined"
-                  label="Enter Position"
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">Employee ID:</lable>
+              <div className="col-sm-3">
+                <input
                   type="text"
-                  required
+                  className="form-control form-control-sm"
+                  disabled
+                  placeholder="Employee ID"
                 />
-              </Grid>
-            </Grid>
+              </div>
+              <lable className="col-sm-2 col-form-lable">Positions:</lable>
+              <div className="col-sm-3">
+                <input type="text" className="form-control form-control-sm" />
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
             <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">Hiring Type:</lable>
+              <div className="col-sm-3">
+                <select className="form-select form-select-sm ">
+                  <option>Select Type</option>
+                  <option>C2C</option>
+                  <option>FCT</option>
+                  <option>FTE</option>
+                  <option>Pro-Active</option>
+                </select>
+              </div>
+              <lable className="col-sm-2 col-form-lable">Years Of Exp:</lable>
+              <div className="col-sm-3">
+                <input type="text" className="form-control form-control-sm" />
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
             <br />
-            <Grid container>
-              <Grid item xs={0.5}></Grid>
-              <Grid item xs={1.5}>
-                <span>Education qualification:-</span>
-              </Grid>
-              <Grid item xs={2.5}>
-                <Select displayEmpty fullWidth="100%" label="Age">
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </Grid>
-              <Grid item xs={2.5}>
-                <Select displayEmpty fullWidth="100%" label="Age">
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </Grid>
-              <Grid item xs={1}></Grid>
-              <Grid item xs={1.5}>
-                <span>Year Of Exp:-</span>
-              </Grid>
-              <Grid item xs={2}>
-                <TextField
-                  variant="outlined"
-                  label="Year of Exp"
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">Requested By:</lable>
+              <div className="col-sm-3">
+                <select className="form-select form-select-sm">
+                  <option>Select </option>
+                  <option>HBU</option>
+                </select>
+              </div>
+              <lable className="col-sm-2 col-form-lable">
+                Type Of Resource:
+              </lable>
+              <div className="col-sm-3">
+                <select class="form-select form-select-sm">
+                  <option>Select Resource</option>
+                  <option>Full Stack</option>
+                  <option>Front-End</option>
+                  <option>Back-End</option>
+                  <option>UI Designer</option>
+                  <option>Architect</option>
+                  <option>Business Analysts</option>
+                </select>
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">Technology:</lable>
+              <div className="col-sm-3">
+                <select class="form-select form-select-sm">
+                  <option>Select Technology </option>
+                  <option>HBU</option>
+                </select>
+              </div>
+              <lable className="col-sm-2 col-form-lable">
+                Technology Specialization:
+              </lable>
+              <div className="col-sm-3">
+                <select className="form-select form-select-sm">
+                  <option value="Select Specialization">
+                    Select Specialization
+                  </option>
+                  <option value="Full Stack">Full Stack</option>
+                  <option value="Front-End">Front-End</option>
+                  <option value="Back-End">Back-End</option>
+                  <option value="UI Designer">UI Designer</option>
+                  <option value="Architect">Architect</option>
+                  <option value="Business Analysts">Business Analysts</option>
+                </select>
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">
+                Work Location Country:
+              </lable>
+              <div className="col-sm-3">
+                <select class="form-select form-select-sm">
+                  <option>Select Country </option>
+                  <option>India</option>
+                  <option>USA</option>
+                  <option>UK</option>
+                </select>
+              </div>
+              <lable className="col-sm-2 col-form-lable">
+                Minimum Qualification:
+              </lable>
+              <div className="col-sm-3">
+                <select className="form-select form-select-sm">
+                  <option value="Select Specialization">
+                    Select Qualification
+                  </option>
+                  <option value="Full Stack">Graduation</option>
+                  <option value="Front-End">Post Graduation</option>
+                </select>
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">
+                Work Location State:
+              </lable>
+              <div className="col-sm-3">
+                <select class="form-select form-select-sm ">
+                  <option>Select State </option>
+                  <option>Karnataka</option>
+                  <option>Maharashtra</option>
+                  <option>Tamil Nadu</option>
+                  <option>Andhra Pradeshy</option>
+                </select>
+              </div>
+              <lable className="col-sm-2 col-form-lable">Graduation:</lable>
+              <div className="col-sm-3">
+                <select className="form-select form-select-sm">
+                  <option value="Select Specialization">
+                    Select Graduation
+                  </option>
+                  <option value="Full Stack">B.E</option>
+                  <option value="Front-End">B.Tech</option>
+                  <option value="Front-End">B.Sc</option>
+                  <option value="Front-End">B.A</option>
+                </select>
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">
+                Work Location City:
+              </lable>
+              <div className="col-sm-3">
+                <select class="form-select form-select-sm">
+                  <option>Select City </option>
+                  <option>Banglore</option>
+                  <option>Pune</option>
+                </select>
+              </div>
+              <lable className="col-sm-2 col-form-lable">
+                Graduation Specialization:
+              </lable>
+              <div className="col-sm-3">
+                <select className="form-select form-select-sm">
+                  <option value="Select Specialization">
+                    Select Specialization
+                  </option>
+                  <option value="Front-End">Computer Science</option>
+                  <option value="Front-End">
+                    Electronics & Telecommunication
+                  </option>
+                  <option value="Front-End">Mechanical</option>
+                  <option value="Front-End">Civil</option>
+                  <option value="Front-End">Commerce</option>
+                  <option value="Front-End">Arts</option>
+                </select>
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">
+                Type Of Developer:
+              </lable>
+              <div className="col-sm-3">
+                
+                <DropdownMultiselect
+                  placeholder="Technology"
+                  class="form-select form-select-sm"
+                  options={[
+                    "Java",
+                    "Python",
+                    "Dot Net",
+                    "PHP",
+                    "JavaScript",
+                    "Ruby",
+                    "C",
+                    "C++",
+                    "Go",
+                    "SQL",
+                  ]}
+                  name="technologies"
+                  selectDeselectLabel
+                  buttonClass="bg-none border border-1"
+                ></DropdownMultiselect>
+                {/* <MultiSelect
+                  options={options}
+                  value={selected}
+                  onChange={setSelected}
+                  labelledBy={"Select"}
+                  isCreatable={true}
+                /> */}
+                {/* <select class="form-select form-select-sm" multiple size="3">
+                  <option>Select Technology </option>
+                  <option>HBU</option>
+                </select>
+                <small>Select the Multiple options with CTRL</small> */}
+              </div>
+              <lable className="col-sm-2 col-form-lable">
+                Post-Graduation:
+              </lable>
+              <div className="col-sm-3">
+                <select className="form-select form-select-sm">
+                  <option value="Select Specialization">
+                    Select Post-Graduation
+                  </option>
+                  <option value="Full Stack">M.E</option>
+                  <option value="Front-End">M.Tech</option>
+                  <option value="Front-End">M.Sc</option>
+                  <option value="Front-End">M.A</option>
+                </select>
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">
+                Resource Available Date:
+              </lable>
+              <div className="col-sm-3">
+                <input type="date" name="" id="" />
+              </div>
+              <lable className="col-sm-2 col-form-lable">
+                Post-Graduation Specialization:
+              </lable>
+              <div className="col-sm-3">
+                <select className="form-select form-select-sm">
+                  <option value="Select Specialization">
+                    Select Specialization
+                  </option>
+                  <option value="Front-End">Computer Science</option>
+                  <option value="Front-End">
+                    Electronics & Telecommunication
+                  </option>
+                  <option value="Front-End">Mechanical</option>
+                  <option value="Front-End">Civil</option>
+                  <option value="Front-End">Commerce</option>
+                  <option value="Front-End">Arts</option>
+                </select>
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">
+                Time Zone Of Shifts:
+              </lable>
+              <div className="col-sm-3">
+                <select class="form-select form-select-sm">
+                  <option>Select Time Zone </option>
+                  <option>HBU</option>
+                </select>
+              </div>
+              <lable className="col-sm-2 col-form-lable">
+                Require Domain Knowledge:
+              </lable>
+              <div className="col-sm-3">
+                <select className="form-select form-select-sm">
+                  <option value="Select Specialization">
+                    Select Post-Graduation
+                  </option>
+                  <option value="Full Stack">M.E</option>
+                  <option value="Front-End">M.Tech</option>
+                  <option value="Front-End">M.Sc</option>
+                  <option value="Front-End">M.A</option>
+                </select>
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">
+                Require To Work In Shift:
+              </lable>
+              <div className="col-sm-1">
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="radio1"
+                    name="optradio"
+                    value="option1"
+                  />
+                  <label class="form-check-label" for="radio1">
+                    Yes
+                  </label>
+                </div>
+              </div>
+              <div className="col-sm-2">
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="radio1"
+                    name="optradio"
+                    value="option1"
+                  />
+                  <label class="form-check-label" for="radio1">
+                    No
+                  </label>
+                </div>
+              </div>
+              <lable className="col-sm-2 col-form-lable">Sales Order No:</lable>
+              <div className="col-sm-2">
+                <input type="text" className="form-control form-control-sm" />
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">Passport:</lable>
+              <div className="col-sm-1">
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="radio1"
+                    name="optradio"
+                    value="option1"
+                  />
+                  <label class="form-check-label" for="radio1">
+                    Yes
+                  </label>
+                </div>
+              </div>
+              <div className="col-sm-2">
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="radio1"
+                    name="optradio"
+                    value="option1"
+                  />
+                  <label class="form-check-label" for="radio1">
+                    No
+                  </label>
+                </div>
+              </div>
+              <lable className="col-sm-2 col-form-lable">JRs No:</lable>
+              <div className="col-sm-1">
+                <input type="text" className="form-control form-control-sm" />
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">VISA Available:</lable>
+              <div className="col-sm-1">
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="radio1"
+                    name="optradio"
+                    value="option1"
+                  />
+                  <label class="form-check-label" for="radio1">
+                    Yes
+                  </label>
+                </div>
+              </div>
+              <div className="col-sm-2">
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="radio1"
+                    name="optradio"
+                    value="option1"
+                  />
+                  <label class="form-check-label" for="radio1">
+                    No
+                  </label>
+                </div>
+              </div>
+              <lable className="col-sm-2 col-form-lable">
+                Attach JD Document:
+              </lable>
+              <div className="col-sm-3">
+                <div className="custom-file-input">
+                  <input
+                    type="file"
+                    name=""
+                    id=""
+                    className="custom-control-file custom file lable"
+                  />
+                </div>
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">
+                Approver Employee ID:
+              </lable>
+
+              <div className="col-sm-2">
+                <input type="text" className="form-control form-control-sm" />
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+
+              <lable className="col-sm-2 col-form-lable">
+                Ready To Relocate:
+              </lable>
+              <div className="col-sm-1">
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="radio1"
+                    name="abc"
+                    value="option1"
+                  />
+                  <label class="form-check-label" for="radio1">
+                    Yes
+                  </label>
+                </div>
+              </div>
+              <div className="col-sm-2">
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="radio1"
+                    name="abc"
+                    value="option1"
+                  />
+                  <label class="form-check-label" for="radio1">
+                    No
+                  </label>
+                </div>
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">
+                Apporver Employee Name:
+              </lable>
+              <div className="col-sm-3">
+                <input type="text" className="form-control form-control-sm" />
+              </div>
+              <lable className="col-sm-2 col-form-lable">
+                If No To Relocate/Days:
+              </lable>
+              <div className="col-sm-1">
+                <input type="text" className="form-control form-control-sm" />
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">Apporved on:</lable>
+              <div className="col-sm-2">
+                <input
                   type="text"
-                  required
+                  className="form-control form-control-sm"
+                  disabled
                 />
-              </Grid>
-            </Grid>
+              </div>
+            </div>
             <br />
+            <div className="form-group row">
+              <lable className="col-sm-2 col-form-lable"></lable>
+              <button className="col-sm-1 btn-outline-warning btn-sm ">
+                SAVE
+              </button>
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <button className="col-sm-1 btn-outline-success btn-sm ">
+                Submit
+              </button>
+              <lable className="col-sm-4 col-form-lable"></lable>
+              <button className="col-sm-1 btn-outline-danger btn-sm ">
+                Delete
+              </button>
+            </div>
             <br />
-            <Grid container>
-              <Grid item xs={0.5}></Grid>
-              <Grid item xs={1.5}>
-                <span>Technology Knowledge Req:-</span>
-              </Grid>
-              <Grid item xs={2.5}>
-                <Select displayEmpty fullWidth="100%" label="Age">
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </Grid>
-              <Grid item xs={2.5}>
-                <Select displayEmpty fullWidth="100%" label="Age">
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </Grid>
-              <Grid item xs={1}></Grid>
-              <Grid item xs={1.5}>
-                <span>Required By:-</span>
-              </Grid>
-              <Grid item xs={2}>
-                <Select displayEmpty fullWidth="100%">
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </Grid>
-            </Grid>
-            <br />
-            <br />
-            <Grid container>
-              <Grid item xs={0.5}></Grid>
-              <Grid item xs={1.5}>
-                <span>Work Location:-</span>
-              </Grid>
-              <Grid item xs={2.5}>
-                <Select displayEmpty fullWidth="100%" label="Country">
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </Grid>
-              <Grid item xs={2.5}>
-                <Select displayEmpty fullWidth="100%" label="City">
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </Grid>
-              <Grid item xs={1}></Grid>
-              <Grid item xs={1.5}>
-                <span>Ready to work in shift:-</span>
-              </Grid>
-              <Grid item xs={2}>
-                <TextField
-                  varient="outlined"
-                  label="Enter Yes or No"
-                  required
-                ></TextField>
-              </Grid>
-            </Grid>
-            <br />
-            <br />
-            <Grid container>
-              <Grid item xs={0.5}></Grid>{" "}
-              <Grid item xs={1.5}>
-                <span>Type Of resource:-</span>
-              </Grid>
-              <Grid item xs={2.5}>
-                <Select displayEmpty fullWidth="100%" label="Country">
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Front-Enf</MenuItem>
-                  <MenuItem value={20}>Back-End</MenuItem>
-                  <MenuItem value={30}>Full Stack</MenuItem>
-                  <MenuItem value={30}>UI Designer</MenuItem>
-                  <MenuItem value={30}>Architet</MenuItem>
-                  <MenuItem value={30}>Business Analysts</MenuItem>
-                </Select>
-              </Grid>
-              <Grid item xs={2.5}></Grid>
-              <Grid item xs={1}></Grid>
-              <Grid item xs={1.5}>
-                <span>Technology:-</span>
-              </Grid>
-              <Grid item xs={2}>
-                <Select displayEmpty fullWidth="100%" label="Country">
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </Grid>
-            </Grid>
-            <br />
-            <br />
-            <Grid container>
-              <Grid item xs={0.5}></Grid>
-              <Grid item xs={1.5}>
-                <span>Domain Knowledge:-</span>
-              </Grid>
-              <Grid item xs={2.5}>
-                <Select fullWidth="100%" label="Country">
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Banking</MenuItem>
-                  <MenuItem value={20}>Insurance</MenuItem>
-                  <MenuItem value={30}>IOT</MenuItem>
-                  <MenuItem value={30}>Manufacturing</MenuItem>
-                </Select>
-              </Grid>
-              <Grid item xs={2.5}></Grid>
-              <Grid item xs={1}></Grid>
-              <Grid item xs={1.5}>
-                <span>Ready to Relocate:-</span>
-              </Grid>
-              <Grid item xs={1}>
-                <label htmlFor="">Yes</label>
-                <input type="radio" />
-              </Grid>
-              <Grid item xs={1}>
-                <label htmlFor="">No</label>
-                <input type="radio" />
-              </Grid>
-            </Grid>
           </form>
         </div>
       </div>

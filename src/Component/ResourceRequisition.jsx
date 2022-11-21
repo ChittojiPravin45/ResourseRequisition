@@ -1,17 +1,49 @@
 import React from "react";
 import { useState } from "react";
-// import { MultiSelect } from "react-multi-select-component";
 import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 
 export const ResourceRequisition = () => {
-  const [selected, setSelected] = useState([]);
+  const [resourcedata, SetResourceData] = useState({});
+  console.log(resourcedata);
 
-  const options = [
-    {
-      value: "peroru",
-      label: "hsfdag",
-    },
-  ];
+  const [Passport, setPassport] = useState(true);
+  const [state, setState] = useState([]);
+  const [city, setCity] = useState([]);
+
+  const country = ["India", "USA", "Japan"];
+  const India = ["Karnataka", "Maharastra", "TamilNadu"];
+  const USA = ["California", "Texas", "Florida"];
+  const Japan = ["Hokkaido", "Tohoku", "Kanto"];
+  const Karnataka = ["Banglore"];
+  const Maharastra = ["Pune", "Mumbai"];
+  const TamilNadu = ["Chennai"];
+
+  const handlecountry = (e) => {
+    if (e.target.value === "India") {
+      setState(India);
+    }
+    if (e.target.value === "USA") {
+      setState(USA);
+    }
+    if (e.target.value === "Japan") {
+      setState(Japan);
+    }
+    SetResourceData({ ...resourcedata, worklocationcountry: e.target.value });
+  };
+  const handlestate = (e) => {
+    if (e.target.value === "Karnataka") {
+      setCity(Karnataka);
+    }
+    if (e.target.value === "Maharastra") {
+      setCity(Maharastra);
+    }
+    if (e.target.value === "TamilNadu") {
+      setCity(TamilNadu);
+    }
+    SetResourceData({ ...resourcedata, worklocationstate: e.target.value });
+  };
+  console.log(city);
+
   return (
     <div className="container my-5">
       <div className="text-center">
@@ -24,10 +56,11 @@ export const ResourceRequisition = () => {
       <div className="row py-3">
         <div className="col">
           <form action="">
+            
             <div className="form-group row">
               <lable className="col-sm-1 col-form-lable"></lable>
               <button className="col-sm-1 btn-outline-primary btn-sm ">
-                ADD
+                NEW
               </button>
               <lable className="col-sm-4 col-form-lable"></lable>
               <lable className="col-sm-2 col-form-lable">
@@ -50,6 +83,12 @@ export const ResourceRequisition = () => {
                   className="form-control form-control-sm"
                   disabled
                   placeholder="Employee Name"
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      employeename: e.target.value,
+                    })
+                  }
                 />
               </div>
               <lable className="col-sm-2 col-form-lable">Created On:</lable>
@@ -58,6 +97,12 @@ export const ResourceRequisition = () => {
                   type="text"
                   className="form-control form-control-sm"
                   disabled
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      employeename: e.target.value,
+                    })
+                  }
                 />
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
@@ -72,11 +117,27 @@ export const ResourceRequisition = () => {
                   className="form-control form-control-sm"
                   disabled
                   placeholder="Employee ID"
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      employeeid: e.target.value,
+                    })
+                  }
                 />
               </div>
-              <lable className="col-sm-2 col-form-lable">Positions:</lable>
+              <lable className="col-sm-2 col-form-lable">*Positions: </lable>
               <div className="col-sm-3">
-                <input type="text" className="form-control form-control-sm" />
+                <input
+                  type="text"
+                  className="form-control form-control-sm"
+                  required
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      position: e.target.value,
+                    })
+                  }
+                />
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -85,17 +146,33 @@ export const ResourceRequisition = () => {
               <lable className="col-sm-1 col-form-lable"></lable>
               <lable className="col-sm-2 col-form-lable">Hiring Type:</lable>
               <div className="col-sm-3">
-                <select className="form-select form-select-sm ">
-                  <option>Select Type</option>
-                  <option>C2C</option>
-                  <option>FCT</option>
-                  <option>FTE</option>
-                  <option>Pro-Active</option>
-                </select>
+                <DropdownMultiselect
+                  placeholder="Select Type"
+                  className="form-select form-select-sm"
+                  options={["C2C", "FCT", "FTE", "Pro-Active"]}
+                  name="Select Type"
+                  selectDeselectLabel
+                  buttonClass="bg-none border border-1"
+                  onClick={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      hiringtype: e.target.value,
+                    })
+                  }
+                ></DropdownMultiselect>
               </div>
               <lable className="col-sm-2 col-form-lable">Years Of Exp:</lable>
               <div className="col-sm-3">
-                <input type="text" className="form-control form-control-sm" />
+                <input
+                  type="text"
+                  className="form-control form-control-m"
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      yearofexp: e.target.value,
+                    })
+                  }
+                />
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -104,24 +181,46 @@ export const ResourceRequisition = () => {
               <lable className="col-sm-1 col-form-lable"></lable>
               <lable className="col-sm-2 col-form-lable">Requested By:</lable>
               <div className="col-sm-3">
-                <select className="form-select form-select-sm">
-                  <option>Select </option>
-                  <option>HBU</option>
-                </select>
+                <DropdownMultiselect
+                  placeholder="Select "
+                  class="form-select form-select-sm"
+                  options={["HBU"]}
+                  name="Requested By"
+                  selectDeselectLabel
+                  buttonClass="bg-none border border-1"
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      requestedby: e.target.value,
+                    })
+                  }
+                ></DropdownMultiselect>
               </div>
               <lable className="col-sm-2 col-form-lable">
                 Type Of Resource:
               </lable>
               <div className="col-sm-3">
-                <select class="form-select form-select-sm">
-                  <option>Select Resource</option>
-                  <option>Full Stack</option>
-                  <option>Front-End</option>
-                  <option>Back-End</option>
-                  <option>UI Designer</option>
-                  <option>Architect</option>
-                  <option>Business Analysts</option>
-                </select>
+                <DropdownMultiselect
+                  placeholder="Select Resource "
+                  class="form-select form-select-sm"
+                  options={[
+                    "Full Stack",
+                    "Front-End",
+                    "Back-End",
+                    "UI Designer",
+                    "Architect",
+                    "Business Analysts",
+                  ]}
+                  name="Select Resource"
+                  selectDeselectLabel
+                  buttonClass="bg-none border border-1"
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      typeofresource: e.target.value,
+                    })
+                  }
+                ></DropdownMultiselect>
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -130,26 +229,53 @@ export const ResourceRequisition = () => {
               <lable className="col-sm-1 col-form-lable"></lable>
               <lable className="col-sm-2 col-form-lable">Technology:</lable>
               <div className="col-sm-3">
-                <select class="form-select form-select-sm">
-                  <option>Select Technology </option>
-                  <option>HBU</option>
-                </select>
+                <DropdownMultiselect
+                  placeholder="Select Technology "
+                  class="form-select form-select-sm"
+                  options={[
+                    "Full Stack",
+                    "Front-End",
+                    "Back-End",
+                    "UI Designer",
+                    "Architect",
+                    "Business Analysts",
+                  ]}
+                  name="Select Technology"
+                  selectDeselectLabel
+                  buttonClass="bg-none border border-1"
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      technology: e.target.value,
+                    })
+                  }
+                ></DropdownMultiselect>
               </div>
               <lable className="col-sm-2 col-form-lable">
                 Technology Specialization:
               </lable>
               <div className="col-sm-3">
-                <select className="form-select form-select-sm">
-                  <option value="Select Specialization">
-                    Select Specialization
-                  </option>
-                  <option value="Full Stack">Full Stack</option>
-                  <option value="Front-End">Front-End</option>
-                  <option value="Back-End">Back-End</option>
-                  <option value="UI Designer">UI Designer</option>
-                  <option value="Architect">Architect</option>
-                  <option value="Business Analysts">Business Analysts</option>
-                </select>
+                <DropdownMultiselect
+                  placeholder="Select Specialization "
+                  class="form-select form-select-sm"
+                  options={[
+                    "Full Stack",
+                    "Front-End",
+                    "Back-End",
+                    "UI Designer",
+                    "Architect",
+                    "Business Analysts",
+                  ]}
+                  name="Select Specialization"
+                  selectDeselectLabel
+                  buttonClass="bg-none border border-1"
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      technologyspecialization: e.target.value,
+                    })
+                  }
+                ></DropdownMultiselect>
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -160,24 +286,38 @@ export const ResourceRequisition = () => {
                 Work Location Country:
               </lable>
               <div className="col-sm-3">
-                <select class="form-select form-select-sm">
+                <select
+                  class="form-select form-select-m"
+                  onChange={handlecountry}
+                >
                   <option>Select Country </option>
-                  <option>India</option>
-                  <option>USA</option>
-                  <option>UK</option>
+                  {country.map((item) => {
+                    return (
+                      <option value={item} key={item}>
+                        {item}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <lable className="col-sm-2 col-form-lable">
                 Minimum Qualification:
               </lable>
               <div className="col-sm-3">
-                <select className="form-select form-select-sm">
-                  <option value="Select Specialization">
-                    Select Qualification
-                  </option>
-                  <option value="Full Stack">Graduation</option>
-                  <option value="Front-End">Post Graduation</option>
-                </select>
+                <DropdownMultiselect
+                  placeholder="Select Specialization "
+                  class="form-select form-select-sm"
+                  options={["Graduation", "Post Graduation"]}
+                  name="Select Specialization"
+                  selectDeselectLabel
+                  buttonClass="bg-none border border-1"
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      minqualification: e.target.value,
+                    })
+                  }
+                ></DropdownMultiselect>
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -188,25 +328,36 @@ export const ResourceRequisition = () => {
                 Work Location State:
               </lable>
               <div className="col-sm-3">
-                <select class="form-select form-select-sm ">
+                <select
+                  class="form-select form-select-m "
+                  onChange={handlestate}
+                >
                   <option>Select State </option>
-                  <option>Karnataka</option>
-                  <option>Maharashtra</option>
-                  <option>Tamil Nadu</option>
-                  <option>Andhra Pradeshy</option>
+                  {state.map((item) => {
+                    return (
+                      <option value={item} key={item}>
+                        {item}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <lable className="col-sm-2 col-form-lable">Graduation:</lable>
               <div className="col-sm-3">
-                <select className="form-select form-select-sm">
-                  <option value="Select Specialization">
-                    Select Graduation
-                  </option>
-                  <option value="Full Stack">B.E</option>
-                  <option value="Front-End">B.Tech</option>
-                  <option value="Front-End">B.Sc</option>
-                  <option value="Front-End">B.A</option>
-                </select>
+                <DropdownMultiselect
+                  placeholder="Select Graduation "
+                  class="form-select form-select-sm"
+                  options={["B.E", "B.Tech ", "B.Sc", "B.A"]}
+                  name="Select Graduation"
+                  selectDeselectLabel
+                  buttonClass="bg-none border border-1"
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      graduation: e.target.value,
+                    })
+                  }
+                ></DropdownMultiselect>
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -217,114 +368,45 @@ export const ResourceRequisition = () => {
                 Work Location City:
               </lable>
               <div className="col-sm-3">
-                <select class="form-select form-select-sm">
+                <select
+                  class="form-select form-select-m"
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      worklocationcity: e.target.value,
+                    })
+                  }
+                >
                   <option>Select City </option>
-                  <option>Banglore</option>
-                  <option>Pune</option>
+                  {city.map((item) => {
+                    return (
+                      <option value={item} key={item}>
+                        {item}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
               <lable className="col-sm-2 col-form-lable">
                 Graduation Specialization:
               </lable>
               <div className="col-sm-3">
-                <select className="form-select form-select-sm">
-                  <option value="Select Specialization">
-                    Select Specialization
-                  </option>
-                  <option value="Front-End">Computer Science</option>
-                  <option value="Front-End">
-                    Electronics & Telecommunication
-                  </option>
-                  <option value="Front-End">Mechanical</option>
-                  <option value="Front-End">Civil</option>
-                  <option value="Front-End">Commerce</option>
-                  <option value="Front-End">Arts</option>
-                </select>
-              </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
-            </div>
-            <br />
-            <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
-                Type Of Developer:
-              </lable>
-              <div className="col-sm-3">
-                
                 <DropdownMultiselect
-                  placeholder="Technology"
+                  placeholder="Select Specialization "
                   class="form-select form-select-sm"
                   options={[
-                    "Java",
-                    "Python",
-                    "Dot Net",
-                    "PHP",
-                    "JavaScript",
-                    "Ruby",
-                    "C",
-                    "C++",
-                    "Go",
-                    "SQL",
+                    "Computer Science",
+                    "Electronics & Telecommunication",
+                    "Mechanical",
+                    "Civil",
+                    "Commerce",
+                    "Arts",
                   ]}
-                  name="technologies"
+                  name="Select Specialization"
                   selectDeselectLabel
                   buttonClass="bg-none border border-1"
+                  onChange={(e)=>SetResourceData({...resourcedata,graduationspecialization:e.target.value})}
                 ></DropdownMultiselect>
-                {/* <MultiSelect
-                  options={options}
-                  value={selected}
-                  onChange={setSelected}
-                  labelledBy={"Select"}
-                  isCreatable={true}
-                /> */}
-                {/* <select class="form-select form-select-sm" multiple size="3">
-                  <option>Select Technology </option>
-                  <option>HBU</option>
-                </select>
-                <small>Select the Multiple options with CTRL</small> */}
-              </div>
-              <lable className="col-sm-2 col-form-lable">
-                Post-Graduation:
-              </lable>
-              <div className="col-sm-3">
-                <select className="form-select form-select-sm">
-                  <option value="Select Specialization">
-                    Select Post-Graduation
-                  </option>
-                  <option value="Full Stack">M.E</option>
-                  <option value="Front-End">M.Tech</option>
-                  <option value="Front-End">M.Sc</option>
-                  <option value="Front-End">M.A</option>
-                </select>
-              </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
-            </div>
-            <br />
-            <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
-                Resource Available Date:
-              </lable>
-              <div className="col-sm-3">
-                <input type="date" name="" id="" />
-              </div>
-              <lable className="col-sm-2 col-form-lable">
-                Post-Graduation Specialization:
-              </lable>
-              <div className="col-sm-3">
-                <select className="form-select form-select-sm">
-                  <option value="Select Specialization">
-                    Select Specialization
-                  </option>
-                  <option value="Front-End">Computer Science</option>
-                  <option value="Front-End">
-                    Electronics & Telecommunication
-                  </option>
-                  <option value="Front-End">Mechanical</option>
-                  <option value="Front-End">Civil</option>
-                  <option value="Front-End">Commerce</option>
-                  <option value="Front-End">Arts</option>
-                </select>
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -335,24 +417,62 @@ export const ResourceRequisition = () => {
                 Time Zone Of Shifts:
               </lable>
               <div className="col-sm-3">
-                <select class="form-select form-select-sm">
-                  <option>Select Time Zone </option>
-                  <option>HBU</option>
-                </select>
+                <DropdownMultiselect
+                  placeholder="Select Time Zone "
+                  class="form-select form-select-sm"
+                  options={["India", "UK"]}
+                  name="Select Time Zone"
+                  selectDeselectLabel
+                  buttonClass="bg-none border border-1"
+                  onChange={(e)=>SetResourceData({...resourcedata,timezoneshifts:e.target.value})}
+                ></DropdownMultiselect>
               </div>
+
               <lable className="col-sm-2 col-form-lable">
-                Require Domain Knowledge:
+                Post-Graduation:
               </lable>
               <div className="col-sm-3">
-                <select className="form-select form-select-sm">
-                  <option value="Select Specialization">
-                    Select Post-Graduation
-                  </option>
-                  <option value="Full Stack">M.E</option>
-                  <option value="Front-End">M.Tech</option>
-                  <option value="Front-End">M.Sc</option>
-                  <option value="Front-End">M.A</option>
-                </select>
+                <DropdownMultiselect
+                  placeholder="Select Post-Graduation "
+                  class="form-select form-select-sm"
+                  options={["M.E", "M.Tech ", "M.Sc", "M.A"]}
+                  name="Select Post-Graduation"
+                  selectDeselectLabel
+                  buttonClass="bg-none border border-1"
+                  onChange={(e)=>SetResourceData({...resourcedata,postgraduation:e.target.value})}
+                ></DropdownMultiselect>
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">
+                Resource Available Date:
+              </lable>
+              <div className="col-sm-3">
+                <input type="date" name="" id="" onChange={(e)=>SetResourceData({...resourcedata,resourceavailabledate:e.target.value})}/>
+              </div>
+              <lable className="col-sm-2 col-form-lable">
+                Post-Graduation Specialization:
+              </lable>
+              <div className="col-sm-3">
+                <DropdownMultiselect
+                  placeholder="Select Specialization "
+                  class="form-select form-select-sm"
+                  options={[
+                    "Computer Science",
+                    "Electronics & Telecommunication",
+                    "Mechanical",
+                    "Civil",
+                    "Commerce",
+                    "Arts",
+                  ]}
+                  name="Select Specialization"
+                  selectDeselectLabel
+                  buttonClass="bg-none border border-1"
+                  onChange={(e)=>SetResourceData({...resourcedata,postgraduationspecialization:e.target.value})}
+                ></DropdownMultiselect>
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -368,8 +488,9 @@ export const ResourceRequisition = () => {
                     type="radio"
                     class="form-check-input"
                     id="radio1"
-                    name="optradio"
+                    name="shift"
                     value="option1"
+                    onClick={(e)=>SetResourceData({...resourcedata,requiredtoworkinshifts:e.target.value})}
                   />
                   <label class="form-check-label" for="radio1">
                     Yes
@@ -382,8 +503,58 @@ export const ResourceRequisition = () => {
                     type="radio"
                     class="form-check-input"
                     id="radio1"
-                    name="optradio"
+                    name="shift"
                     value="option1"
+                  />
+                  <label class="form-check-label" for="radio1">
+                    No
+                  </label>
+                </div>
+              </div>
+              <lable className="col-sm-2 col-form-lable">
+                Require Domain Knowledge:
+              </lable>
+              <div className="col-sm-3">
+                <DropdownMultiselect
+                  placeholder="Select Domain "
+                  class="form-select form-select-sm"
+                  options={["Health Care", "Banking"]}
+                  name="Select Domain"
+                  selectDeselectLabel
+                  buttonClass="bg-none border border-1"
+                  onChange={(e)=>SetResourceData({...resourcedata,requireddomainknowledge:e.target.value})}
+                ></DropdownMultiselect>
+              </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+            </div>
+            <br />
+            <div className="form-group row">
+              <lable className="col-sm-1 col-form-lable"></lable>
+              <lable className="col-sm-2 col-form-lable">Passport:</lable>
+              <div className="col-sm-1">
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="radio1"
+                    name="pass"
+                    value="option1"
+                    onClick={() => setPassport(false)}
+                  />
+                  <label class="form-check-label" for="radio1">
+                    Yes
+                  </label>
+                </div>
+              </div>
+              <div className="col-sm-2">
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="radio1"
+                    name="pass"
+                    value="option1"
+                    onClick={() => setPassport(true)}
                   />
                   <label class="form-check-label" for="radio1">
                     No
@@ -399,15 +570,17 @@ export const ResourceRequisition = () => {
             <br />
             <div className="form-group row">
               <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">Passport:</lable>
+              <lable className="col-sm-2 col-form-lable">VISA Available:</lable>
               <div className="col-sm-1">
                 <div class="form-check">
                   <input
                     type="radio"
                     class="form-check-input"
                     id="radio1"
-                    name="optradio"
+                    name="visa"
                     value="option1"
+                    disabled={Passport}
+                    onClick={(e)=>SetResourceData({...resourcedata,visaavailable:e.target.value})}
                   />
                   <label class="form-check-label" for="radio1">
                     Yes
@@ -420,8 +593,9 @@ export const ResourceRequisition = () => {
                     type="radio"
                     class="form-check-input"
                     id="radio1"
-                    name="optradio"
+                    name="visa"
                     value="option1"
+                    disabled={Passport}
                   />
                   <label class="form-check-label" for="radio1">
                     No
@@ -437,35 +611,14 @@ export const ResourceRequisition = () => {
             <br />
             <div className="form-group row">
               <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">VISA Available:</lable>
-              <div className="col-sm-1">
-                <div class="form-check">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    id="radio1"
-                    name="optradio"
-                    value="option1"
-                  />
-                  <label class="form-check-label" for="radio1">
-                    Yes
-                  </label>
-                </div>
-              </div>
+              <lable className="col-sm-2 col-form-lable">
+                Approver Employee ID:
+              </lable>
+
               <div className="col-sm-2">
-                <div class="form-check">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    id="radio1"
-                    name="optradio"
-                    value="option1"
-                  />
-                  <label class="form-check-label" for="radio1">
-                    No
-                  </label>
-                </div>
+                <input type="text" className="form-control form-control-sm" />
               </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
               <lable className="col-sm-2 col-form-lable">
                 Attach JD Document:
               </lable>
@@ -485,13 +638,11 @@ export const ResourceRequisition = () => {
             <div className="form-group row">
               <lable className="col-sm-1 col-form-lable"></lable>
               <lable className="col-sm-2 col-form-lable">
-                Approver Employee ID:
+                Apporver Employee Name:
               </lable>
-
-              <div className="col-sm-2">
+              <div className="col-sm-3">
                 <input type="text" className="form-control form-control-sm" />
               </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
 
               <lable className="col-sm-2 col-form-lable">
                 Ready To Relocate:
@@ -529,12 +680,16 @@ export const ResourceRequisition = () => {
             <br />
             <div className="form-group row">
               <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
-                Apporver Employee Name:
-              </lable>
-              <div className="col-sm-3">
-                <input type="text" className="form-control form-control-sm" />
+              <lable className="col-sm-2 col-form-lable">Apporved on:</lable>
+              <div className="col-sm-2">
+                <input
+                  type="text"
+                  className="form-control form-control-sm"
+                  disabled
+                />
               </div>
+              <lable className="col-sm-1 col-form-lable"></lable>
+
               <lable className="col-sm-2 col-form-lable">
                 If No To Relocate/Days:
               </lable>
@@ -544,17 +699,7 @@ export const ResourceRequisition = () => {
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
             <br />
-            <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">Apporved on:</lable>
-              <div className="col-sm-2">
-                <input
-                  type="text"
-                  className="form-control form-control-sm"
-                  disabled
-                />
-              </div>
-            </div>
+
             <br />
             <div className="form-group row">
               <lable className="col-sm-2 col-form-lable"></lable>

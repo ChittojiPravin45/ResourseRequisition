@@ -1,11 +1,35 @@
 import React from "react";
 import { useState } from "react";
+import Select from "react-select";
 import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 
 export const ResourceRequisition = () => {
   const [resourcedata, SetResourceData] = useState({});
   const [data, setData] = useState([])
   console.log(data);
+var [dyta,setDyta]=useState();
+var handleSelect=(e)=>{
+  setDyta(Array.isArray(e)?e.map(x=>x.label):[]);
+}
+console.log(dyta);
+  var Education=[
+    {
+      value:1,
+      label: "Graduation"
+    },
+    {
+      value:2,
+      label: "Post-Graduation"
+    },
+    {
+      value:3,
+      label: "Post-Graduation3"
+    },
+    {
+      value:4,
+      label: "Post-Graduation4"
+    },
+  ];
 
   const [Passport, setPassport] = useState(true);
   const [relocate, setRelocate] = useState(true)
@@ -299,7 +323,14 @@ export const ResourceRequisition = () => {
                 Education Qualification:
               </lable>
               <div className="col-sm-3">
-                <DropdownMultiselect
+
+                <Select isMulti options={Education} onChange={handleSelect}></Select>
+{/* <select id="list" onChange="getSelectedGrad();">
+  <option value="graduation">Graduation</option>
+  <option value="postgraduation">Post-graduation</option>
+</select> */}
+
+                {/* <DropdownMultiselect
                   placeholder="Select Specialization "
                   class="form-select form-select-sm"
                   options={["Graduation", "Post Graduation"]}    //other qualification
@@ -312,7 +343,7 @@ export const ResourceRequisition = () => {
                       minqualification: e.target.value,
                     })
                   }
-                ></DropdownMultiselect>
+                ></DropdownMultiselect> */}
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>

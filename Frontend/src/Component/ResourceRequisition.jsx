@@ -1,18 +1,31 @@
+import axios from "axios";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import Select from "react-select";
-import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
+// import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 
 export const ResourceRequisition = () => {
   const [resourcedata, SetResourceData] = useState({});
-  const [data, setData] = useState([])
-  console.log(data);
-var [dyta,setDyta]=useState();
+  // console.log(resourcedata)
+
+  const getdata=async()=>{
+    const result=await axios.get("http://localhost:8080/viewDomains")
+    const result1=await axios.get("http://localhost:8080/hiringtype/list-all-types")
+    console.log(result)
+    console.log(result1)
+  }
+
+  useEffect(()=>{
+    getdata()
+  },[])
+
+  var [dyta,setDyta]=useState();
 var handleSelect=(e)=>{
   setDyta(Array.isArray(e)?e.map(x=>x.label):[]);
 }
-console.log(dyta);
-  var Education=[
+// console.log(dyta);
+  var educationqualification=[
     {
       value:1,
       label: "Graduation"
@@ -20,16 +33,286 @@ console.log(dyta);
     {
       value:2,
       label: "Post-Graduation"
+    }
+  ];
+  
+  var [developer,setDeveloper]=useState();
+var handleTypeofDeveloper=(e)=>{
+  setDeveloper(Array.isArray(e)?e.map(x=>x.label):[]);
+}
+// console.log(developer);
+  var typeOfDeveloper=[
+    {
+      value:1,
+      label: "Full Stack"
+    },
+    {
+      value:2,
+      label: "Front-End"
     },
     {
       value:3,
-      label: "Post-Graduation3"
+      label:"Back-End"
     },
     {
       value:4,
-      label: "Post-Graduation4"
+      label:"UI Designer"
+      
     },
+    {
+      value:5,
+      label:"Architect"
+    },
+    {
+      value:6,
+      label:"Business Analysts"
+    }
   ];
+ 
+  var [technology,setTechnology]=useState();
+var handleTechnology=(e)=>{
+  setTechnology(Array.isArray(e)?e.map(x=>x.label):[]);
+}
+// console.log(technology);
+  var technologydata=[
+    {
+      value:1,
+      label: "Full Stack"
+    },
+    {
+      value:2,
+      label: "Front-End"
+    },
+    {
+      value:3,
+      label:"Back-End"
+    },
+    {
+      value:4,
+      label:"UI Designer"
+      
+    },
+    {
+      value:5,
+      label:"Architect"
+    },
+    {
+      value:6,
+      label:"Business Analysts"
+    }
+  ];
+ 
+  var [technologyspec,setTechnologyspec]=useState();
+var handleTechnologyspec=(e)=>{
+  setTechnologyspec(Array.isArray(e)?e.map(x=>x.label):[]);
+}
+// console.log(technologyspec);
+  var technologyspecdata=[
+    {
+      value:1,
+      label: "Full Stack"
+    },
+    {
+      value:2,
+      label: "Front-End"
+    },
+    {
+      value:3,
+      label:"Back-End"
+    },
+    {
+      value:4,
+      label:"UI Designer"
+      
+    },
+    {
+      value:5,
+      label:"Architect"
+    },
+    {
+      value:6,
+      label:"Business Analysts"
+    }
+  ];
+
+  var [graduation,setGraduation]=useState();
+var handlegraduation=(e)=>{
+  setGraduation(Array.isArray(e)?e.map(x=>x.label):[]);
+}
+// console.log(graduation);
+  var graduationdata=[
+    {
+      value:1,
+      label: "B.E"
+    },
+    {
+      value:2,
+      label: "B.Tech"
+    },
+    {
+      value:3,
+      label:"B.Sc"
+    },
+    {
+      value:4,
+      label:"B.A"
+      
+    }
+  ];
+ 
+  var [postgraduation,setPostGraduation]=useState();
+var handlepostgraduation=(e)=>{
+  setPostGraduation(Array.isArray(e)?e.map(x=>x.label):[]);
+}
+// console.log(postgraduation);
+  var postgraduationdata=[
+    {
+      value:1,
+      label: "M.E"
+    },
+    {
+      value:2,
+      label: "M.Tech"
+    },
+    {
+      value:3,
+      label:"M.Sc"
+    },
+    {
+      value:4,
+      label:"M.A"
+      
+    }
+  ];
+ 
+  var [graduationspec,setGraduationspec]=useState();
+var handlegraduationspec=(e)=>{
+  setGraduationspec(Array.isArray(e)?e.map(x=>x.label):[]);
+}
+// console.log(graduationspec);
+  var graduationspecdata=[
+    {
+      value:1,
+      label: "Computer Science"
+    },
+    {
+      value:2,
+      label: "Electronics & Telecommunication"
+    },
+    {
+      value:3,
+      label:"Mechanical"
+    },
+    {
+      value:4,
+      label:"Civil"
+    },
+    {
+      value:5,
+      label: "Commerce"
+    },
+    {
+      value:5,
+      label: "Arts"
+    }
+  ];
+  
+  var [postgraduationspec,setPostGraduationspec]=useState();
+var handlepostgraduationspec=(e)=>{
+  setPostGraduationspec(Array.isArray(e)?e.map(x=>x.label):[]);
+}
+// console.log(postgraduationspec);
+  var postgraduationspecdata=[
+    {
+      value:1,
+      label: "Computer Science"
+    },
+    {
+      value:2,
+      label: "Electronics & Telecommunication"
+    },
+    {
+      value:3,
+      label:"Mechanical"
+    },
+    {
+      value:4,
+      label:"Civil"
+    },
+    {
+      value:5,
+      label: "Commerce"
+    },
+    {
+      value:5,
+      label: "Arts"
+    }
+  ]
+
+    var [otherspecialization,setOtherspecialization]=useState();
+var handleotherspecialization=(e)=>{
+  setOtherspecialization(Array.isArray(e)?e.map(x=>x.label):[]);
+}
+// console.log(otherspecialization);
+  var otherspecializationdata=[
+    {
+      value:1,
+      label: "Electronics"
+    },
+    {
+      value:2,
+      label: "Mechanical"
+    },
+    {
+      value:3,
+      label:"Computer"
+    }
+  ];
+   
+  var [otherqualification,setOtherqualification]=useState();
+var handleotherqualification=(e)=>{
+  setOtherqualification(Array.isArray(e)?e.map(x=>x.label):[]);
+}
+// console.log(otherqualification);
+  var otherqualificationdata=[
+    {
+      value:1,
+      label: "10th"
+    },
+    {
+      value:2,
+      label: "12th"
+    },
+    {
+      value:3,
+      label:"Diploma"
+    }
+  ];
+ 
+var [domain,setDomain]=useState();
+var handledomain=(e)=>{
+  setDomain(Array.isArray(e)?e.map(x=>x.label):[]);
+}
+// console.log(domain);
+  var domaindata=[
+    {
+      value:1,
+      label: "Banking"
+    },
+    {
+      value:2,
+      label: "Insurance"
+    },
+    {
+      value:3,
+      label:"Manufacturing"
+    },
+    {
+      value:4,
+      label:"Pharmaceutical"
+    }
+  ];
+
 
   const [Passport, setPassport] = useState(true);
   const [relocate, setRelocate] = useState(true)
@@ -69,7 +352,6 @@ console.log(dyta);
     }
     SetResourceData({ ...resourcedata, worklocationstate: e.target.value });
   };
-  console.log(city);
 
   return (
     <div className="container my-5">
@@ -155,7 +437,7 @@ console.log(dyta);
               <lable className="col-sm-2 col-form-lable">Years Of Exp:</lable>
               <div className="col-sm-3">
                 <input
-                  type="text"
+                  type="number"
                   className="form-control form-control-m"
                   onChange={(e) =>
                     SetResourceData({
@@ -177,6 +459,12 @@ console.log(dyta);
               <div className="col-sm-3"  >
                 <select
                   class="form-select form-select-m"
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      hiringtype: e.target.value,
+                    })
+                  }
                 >
                   <option>Select Type </option>
                   <option>C2C</option>
@@ -191,31 +479,8 @@ console.log(dyta);
                 Type Of Developer:
               </lable>
               <div className="col-sm-3">
-                <DropdownMultiselect
-                  placeholder="Select Resource "
-                  class="form-select form-select-sm"
-                  options={[
-                    "Full Stack",
-                    "Front-End",
-                    "Back-End",
-                    "UI Designer",
-                    "Architect",
-                    "Business Analysts",
-                  ]}
-                  name="Select Resource"
-                  selectDeselectLabel
-                  buttonClass="bg-none border border-1"
-                  onChange={(e) =>
-                    SetResourceData({
-                      ...resourcedata,
-                      typeofresource: e.target.value,
-                    })
-                  }
-                ></DropdownMultiselect>
+              <Select isMulti options={typeOfDeveloper} onChange={handleTypeofDeveloper}></Select>
               </div>
-
-
-
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
             <br />
@@ -232,27 +497,7 @@ console.log(dyta);
               </div>
               <lable className="col-sm-2 col-form-lable">Technology:</lable>
               <div className="col-sm-3">
-                <DropdownMultiselect
-                  placeholder="Select Technology "
-                  class="form-select form-select-sm"
-                  options={[
-                    "Full Stack",
-                    "Front-End",
-                    "Back-End",
-                    "UI Designer",
-                    "Architect",
-                    "Business Analysts",
-                  ]}
-                  name="Select Technology"
-                  selectDeselectLabel
-                  buttonClass="bg-none border border-1"
-                  onChange={(e) =>
-                    SetResourceData({
-                      ...resourcedata,
-                      technology: e.target.value,
-                    })
-                  }
-                ></DropdownMultiselect>
+              <Select isMulti options={technologydata} onChange={handleTechnology}></Select>               
               </div>
 
               <lable className="col-sm-1 col-form-lable"></lable>
@@ -264,37 +509,14 @@ console.log(dyta);
                 Require Domain Knowledge:
               </lable>
               <div className="col-sm-3">
-                <DropdownMultiselect
-                  placeholder="Select Domain "
-                  class="form-select form-select-sm"
-                  options={["Health Care", "Banking"]}
-                  name="Select Domain"
-                  selectDeselectLabel
-                  buttonClass="bg-none border border-1"
-                  onChange={(e) => SetResourceData({ ...resourcedata, requireddomainknowledge: e.target.value })}
-                ></DropdownMultiselect>
+              <Select isMulti options={domaindata} onChange={handledomain}></Select> 
+               
               </div>
               <lable className="col-sm-2 col-form-lable">
                 Technology Specialization:
               </lable>
-              <div className="col-sm-3" onClick={(e) => setData([...data, e.target.value])}>
-                <DropdownMultiselect
-                  placeholder="Select Specialization "
-                  class="form-select form-select-sm"
-
-                  options={[
-                    "Full Stack",
-                    "Front-End",
-                    "Back-End",
-                    "UI Designer",
-                    "Architect",
-                    "Business Analysts",
-                  ]}
-                  name="Select Specialization"
-                  selectDeselectLabel
-                  buttonClass="bg-none border border-1"
-
-                ></DropdownMultiselect>
+              <div className="col-sm-3">
+              <Select isMulti options={technologyspecdata} onChange={handleTechnologyspec}></Select>
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -323,27 +545,7 @@ console.log(dyta);
                 Education Qualification:
               </lable>
               <div className="col-sm-3">
-
-                <Select isMulti options={Education} onChange={handleSelect}></Select>
-{/* <select id="list" onChange="getSelectedGrad();">
-  <option value="graduation">Graduation</option>
-  <option value="postgraduation">Post-graduation</option>
-</select> */}
-
-                {/* <DropdownMultiselect
-                  placeholder="Select Specialization "
-                  class="form-select form-select-sm"
-                  options={["Graduation", "Post Graduation"]}    //other qualification
-                  name="Select Specialization"
-                  selectDeselectLabel
-                  buttonClass="bg-none border border-1"
-                  onChange={(e) =>
-                    SetResourceData({
-                      ...resourcedata,
-                      minqualification: e.target.value,
-                    })
-                  }
-                ></DropdownMultiselect> */}
+                <Select isMulti options={educationqualification} onChange={handleSelect}></Select>
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -370,20 +572,8 @@ console.log(dyta);
               </div>
               <lable className="col-sm-2 col-form-lable">Graduation:</lable>
               <div className="col-sm-3">
-                <DropdownMultiselect
-                  placeholder="Select Graduation "
-                  class="form-select form-select-sm"
-                  options={["B.E", "B.Tech ", "B.Sc", "B.A"]}
-                  name="Select Graduation"
-                  selectDeselectLabel
-                  buttonClass="bg-none border border-1"
-                  onChange={(e) =>
-                    SetResourceData({
-                      ...resourcedata,
-                      graduation: e.target.value,
-                    })
-                  }
-                ></DropdownMultiselect>
+              <Select isMulti options={graduationdata} onChange={handlegraduation}></Select>
+                
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -417,22 +607,8 @@ console.log(dyta);
                 Graduation Specialization:
               </lable>
               <div className="col-sm-3">
-                <DropdownMultiselect
-                  placeholder="Select Specialization "
-                  class="form-select form-select-sm"
-                  options={[
-                    "Computer Science",
-                    "Electronics & Telecommunication",
-                    "Mechanical",
-                    "Civil",
-                    "Commerce",
-                    "Arts",
-                  ]}
-                  name="Select Specialization"
-                  selectDeselectLabel
-                  buttonClass="bg-none border border-1"
-                  onChange={(e) => SetResourceData({ ...resourcedata, graduationspecialization: e.target.value })}
-                ></DropdownMultiselect>
+              <Select isMulti options={graduationspecdata} onChange={handlegraduationspec}></Select>
+               
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -450,15 +626,7 @@ console.log(dyta);
                 Post-Graduation:
               </lable>
               <div className="col-sm-3">
-                <DropdownMultiselect
-                  placeholder="Select Post-Graduation "
-                  class="form-select form-select-sm"
-                  options={["M.E", "M.Tech ", "M.Sc", "M.A"]}
-                  name="Select Post-Graduation"
-                  selectDeselectLabel
-                  buttonClass="bg-none border border-1"
-                  onChange={(e) => SetResourceData({ ...resourcedata, postgraduation: e.target.value })}
-                ></DropdownMultiselect>
+              <Select isMulti options={postgraduationdata} onChange={handlepostgraduation}></Select>
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -469,37 +637,28 @@ console.log(dyta);
                 Time Zone Of Shifts:
               </lable>
               <div className="col-sm-3">
-                <DropdownMultiselect
-                  placeholder="Select Time Zone "
-                  class="form-select form-select-sm"
-                  options={["India", "UK"]}
-                  name="Select Time Zone"
-                  selectDeselectLabel
-                  buttonClass="bg-none border border-1"
-                  onChange={(e) => SetResourceData({ ...resourcedata, timezoneshifts: e.target.value })}
-                ></DropdownMultiselect>
+                <select
+                  class="form-select form-select-m"  
+                  onChange={(e) =>
+                    SetResourceData({
+                      ...resourcedata,
+                      timezone: e.target.value,
+                    })
+                  }>
+                  <option>Select Time Zone </option>
+                  <option>India</option>
+                  <option>UK</option>
+                  <option>USA</option>
+                  <option>Japan</option>
+                  
+                </select>
               </div>
 
               <lable className="col-sm-2 col-form-lable">
                 Post-Graduation Specialization:
               </lable>
               <div className="col-sm-3">
-                <DropdownMultiselect
-                  placeholder="Select Specialization "
-                  class="form-select form-select-sm"
-                  options={[
-                    "Computer Science",
-                    "Electronics & Telecommunication",
-                    "Mechanical",
-                    "Civil",
-                    "Commerce",
-                    "Arts",
-                  ]}
-                  name="Select Specialization"
-                  selectDeselectLabel
-                  buttonClass="bg-none border border-1"
-                  onChange={(e) => SetResourceData({ ...resourcedata, postgraduationspecialization: e.target.value })}
-                ></DropdownMultiselect>
+              <Select isMulti options={postgraduationspecdata} onChange={handlepostgraduationspec}></Select>
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -542,17 +701,8 @@ console.log(dyta);
                 Other Qualification:
               </lable>
               <div className="col-sm-3">
-                <DropdownMultiselect
-                  placeholder="Select Other Qualification "
-                  class="form-select form-select-sm"
-                  options={[
-                    "10th","12th","Diploma"
-                  ]}
-                  name="Select Specialization"
-                  selectDeselectLabel
-                  buttonClass="bg-none border border-1"
-                  onChange={(e) => SetResourceData({ ...resourcedata, otherqualifications: e.target.value })}
-                ></DropdownMultiselect>
+              <Select isMulti options={otherqualificationdata} onChange={handleotherqualification}></Select>
+                
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -594,17 +744,7 @@ console.log(dyta);
                 Other Specialization:
               </lable>
               <div className="col-sm-3">
-                <DropdownMultiselect
-                  placeholder="Select Other Specialization "
-                  class="form-select form-select-sm"
-                  options={[
-                    "Electrical","Mechanical"
-                  ]}
-                  name="Select Specialization"
-                  selectDeselectLabel
-                  buttonClass="bg-none border border-1"
-                  onChange={(e) => SetResourceData({ ...resourcedata, otherspecialization: e.target.value })}
-                ></DropdownMultiselect>
+              <Select isMulti options={otherspecializationdata} onChange={handleotherspecialization}></Select>
               </div>
               
               <lable className="col-sm-1 col-form-lable"></lable>
@@ -674,7 +814,13 @@ console.log(dyta);
               <lable className="col-sm-1 col-form-lable"></lable>
               <lable className="col-sm-2 col-form-lable">Sales Order No:</lable>
               <div className="col-sm-2">
-                <input type="text" className="form-control form-control-sm" />
+                <input type="text" className="form-control form-control-sm" 
+                onChange={(e) =>
+                  SetResourceData({
+                    ...resourcedata,
+                    salesorderno: e.target.value,
+                  })
+                }/>
               </div>
               
               <lable className="col-sm-1 col-form-lable"></lable>
@@ -765,7 +911,13 @@ console.log(dyta);
                 If No To Relocate/Days:
               </lable>
               <div className="col-sm-1">
-                <input type="number" className="form-control form-control-sm" disabled={relocate} />
+                <input type="number" className="form-control form-control-sm" disabled={relocate} 
+                onChange={(e) =>
+                  SetResourceData({
+                    ...resourcedata,
+                    relocateindays: e.target.value,
+                  })
+                }/>
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>

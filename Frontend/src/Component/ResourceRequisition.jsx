@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { json } from "react-router-dom";
 import Select from "react-select";
 // import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 
@@ -10,13 +11,15 @@ export const ResourceRequisition = () => {
   // console.log(resourcedata)
   const [viewDomainsdata,setViewDomainsdata]=useState([])
   const [hiringTypedata,setHiringTypedata]=useState([])
+  const [countrydata,setCounterdata]=useState([])
   const getdata=async()=>{
     const result=await axios.get("http://localhost:8080/viewDomains")
     setViewDomainsdata(result.data)
     const result1=await axios.get("http://localhost:8080/hiringtype/list-all-types")
     setHiringTypedata(result1.data)
-    console.log(result)
-    console.log(result1)
+    const result2=await axios.get("http://localhost:8082/api/country")
+    setCounterdata(result2.data)
+    console.log(countrydata)
   }
 
   useEffect(()=>{
@@ -295,27 +298,8 @@ var handleotherqualification=(e)=>{
 var [domain,setDomain]=useState();
 var handledomain=(e)=>{
   setDomain(Array.isArray(e)?e.map(x=>x.label):[]);
-}
-// console.log(domain);
-  var domaindata=[
-    {
-      value:1,
-      label: "Banking"
-    },
-    {
-      value:2,
-      label: "Insurance"
-    },
-    {
-      value:3,
-      label:"Manufacturing"
-    },
-    {
-      value:4,
-      label:"Pharmaceutical"
-    }
-  ];
-
+  SetResourceData({ ...resourcedata, domainknowledge: e.target.value })
+} 
 
   const [Passport, setPassport] = useState(true);
   const [relocate, setRelocate] = useState(true)
@@ -323,7 +307,7 @@ var handledomain=(e)=>{
   const [state, setState] = useState([]);
   const [city, setCity] = useState([]);
 
-  const country = ["India", "USA", "Japan"];
+  // const country = ["India", "USA", "Japan"];
   const India = ["Karnataka", "Maharastra", "TamilNadu"];
   const USA = ["California", "Texas", "Florida"];
   const Japan = ["Hokkaido", "Tohoku", "Kanto"];
@@ -332,15 +316,6 @@ var handledomain=(e)=>{
   const TamilNadu = ["Chennai"];
 
   const handlecountry = (e) => {
-    if (e.target.value === "India") {
-      setState(India);
-    }
-    if (e.target.value === "USA") {
-      setState(USA);
-    }
-    if (e.target.value === "Japan") {
-      setState(Japan);
-    }
     SetResourceData({ ...resourcedata, worklocationcountry: e.target.value });
   };
   const handlestate = (e) => {
@@ -356,6 +331,9 @@ var handledomain=(e)=>{
     SetResourceData({ ...resourcedata, worklocationstate: e.target.value });
   };
 
+  const handlesave=(resourcedata)=>{
+    localStorage.setItem("resourcerequisitiondata",JSON.stringify(resourcedata))
+  }
   return (
     <div className="container my-5">
       <div className="text-center">
@@ -536,10 +514,10 @@ var handledomain=(e)=>{
                   onChange={handlecountry}
                 >
                   <option>Select Country </option>
-                  {country.map((item) => {
+                  {countrydata.map((item) => {
                     return (
-                      <option value={item} key={item}>
-                        {item}
+                      <option value={item.name} key={item.name}>
+                        {item.name}
                       </option>
                     );
                   })}
@@ -930,7 +908,7 @@ var handledomain=(e)=>{
             <br />
             <div className="form-group row">
               <lable className="col-sm-2 col-form-lable"></lable>
-              <button className="col-sm-1 btn-outline-warning btn-sm ">
+              <button className="col-sm-1 btn-outline-warning btn-sm " onClick={()=>handlesave(resourcedata)}>
                 SAVE
               </button>
               <lable className="col-sm-1 col-form-lable"></lable>

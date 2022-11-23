@@ -8,10 +8,13 @@ import Select from "react-select";
 export const ResourceRequisition = () => {
   const [resourcedata, SetResourceData] = useState({});
   // console.log(resourcedata)
-
+  const [viewDomainsdata,setViewDomainsdata]=useState([])
+  const [hiringTypedata,setHiringTypedata]=useState([])
   const getdata=async()=>{
     const result=await axios.get("http://localhost:8080/viewDomains")
+    setViewDomainsdata(result.data)
     const result1=await axios.get("http://localhost:8080/hiringtype/list-all-types")
+    setHiringTypedata(result1.data)
     console.log(result)
     console.log(result1)
   }
@@ -467,10 +470,11 @@ var handledomain=(e)=>{
                   }
                 >
                   <option>Select Type </option>
-                  <option>C2C</option>
-                  <option>FCT</option>
-                  <option>FTE</option>
-                  <option>Pro-Active</option>
+                  {hiringTypedata.map((item)=>{
+                    return(
+                      <option value={item.hiringTypeId}>{item.hiringTypeName}</option>
+                    )
+                  })}
 
                 </select>
 
@@ -509,7 +513,7 @@ var handledomain=(e)=>{
                 Require Domain Knowledge:
               </lable>
               <div className="col-sm-3">
-              <Select isMulti options={domaindata} onChange={handledomain}></Select> 
+              <Select isMulti options={viewDomainsdata.map((item)=>({value:item.domainId,label:item.domainKnowledge}))} onChange={handledomain}></Select> 
                
               </div>
               <lable className="col-sm-2 col-form-lable">

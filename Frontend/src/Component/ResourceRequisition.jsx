@@ -2,7 +2,6 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { json } from "react-router-dom";
 import Select from "react-select";
 // import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 
@@ -12,6 +11,14 @@ export const ResourceRequisition = () => {
   const [viewDomainsdata,setViewDomainsdata]=useState([])
   const [hiringTypedata,setHiringTypedata]=useState([])
   const [countrydata,setCounterdata]=useState([])
+  const [qualification,setQualification]=useState([])
+  const [graduationdata,setGraduationdata]=useState([])
+  const [graduationspecialization,setGraduationspecialization]=useState([])
+  const [postgraduationdata,setPostGraduationdata]=useState([])
+  const [postgraduationspecialization,setPostGraduationspecialization]=useState([])
+  const [othergraduationdata,setOtherGraduationdata]=useState([])
+  const [othergraduationspecialization,setOtherGraduationspecialization]=useState([])
+
   const getdata=async()=>{
     const result=await axios.get("http://localhost:8080/viewDomains")
     setViewDomainsdata(result.data)
@@ -19,7 +26,21 @@ export const ResourceRequisition = () => {
     setHiringTypedata(result1.data)
     const result2=await axios.get("http://localhost:8082/api/country")
     setCounterdata(result2.data)
-    console.log(countrydata)
+    const result3=await axios.get("http://localhost:8082/api/qualification")
+    setQualification(result3.data)
+    const result4=await axios.get("http://localhost:8082/api/qualificationDegree")
+    setGraduationdata(result4.data)
+    const result5=await axios.get("http://localhost:8082/api/qualificationSpecialization")
+    setGraduationspecialization(result5.data)
+    const result6=await axios.get("http://localhost:8082/api/postqualificationDegree")
+    setPostGraduationdata(result6.data)
+    const result7=await axios.get("http://localhost:8082/api/postqualificationSpecialization")
+    setPostGraduationspecialization(result7.data)
+    const result8=await axios.get("http://localhost:8082/api/otherqualificationDegree")
+    setOtherGraduationdata(result8.data)
+    const result9=await axios.get("http://localhost:8082/api/otherqualificationSpecialization")
+    setOtherGraduationspecialization(result9.data)
+
   }
 
   useEffect(()=>{
@@ -27,273 +48,92 @@ export const ResourceRequisition = () => {
   },[])
 
   var [dyta,setDyta]=useState();
-var handleSelect=(e)=>{
+var handlequalification=(e)=>{
   setDyta(Array.isArray(e)?e.map(x=>x.label):[]);
+  SetResourceData({ ...resourcedata, qualification: e.target.value })
+
 }
 // console.log(dyta);
-  var educationqualification=[
-    {
-      value:1,
-      label: "Graduation"
-    },
-    {
-      value:2,
-      label: "Post-Graduation"
-    }
-  ];
+ 
   
   var [developer,setDeveloper]=useState();
 var handleTypeofDeveloper=(e)=>{
   setDeveloper(Array.isArray(e)?e.map(x=>x.label):[]);
 }
 // console.log(developer);
-  var typeOfDeveloper=[
-    {
-      value:1,
-      label: "Full Stack"
-    },
-    {
-      value:2,
-      label: "Front-End"
-    },
-    {
-      value:3,
-      label:"Back-End"
-    },
-    {
-      value:4,
-      label:"UI Designer"
-      
-    },
-    {
-      value:5,
-      label:"Architect"
-    },
-    {
-      value:6,
-      label:"Business Analysts"
-    }
-  ];
+const typeOfDeveloper=[{value:1,label:"Full Stack"}]
+ 
  
   var [technology,setTechnology]=useState();
 var handleTechnology=(e)=>{
   setTechnology(Array.isArray(e)?e.map(x=>x.label):[]);
 }
 // console.log(technology);
-  var technologydata=[
-    {
-      value:1,
-      label: "Full Stack"
-    },
-    {
-      value:2,
-      label: "Front-End"
-    },
-    {
-      value:3,
-      label:"Back-End"
-    },
-    {
-      value:4,
-      label:"UI Designer"
-      
-    },
-    {
-      value:5,
-      label:"Architect"
-    },
-    {
-      value:6,
-      label:"Business Analysts"
-    }
-  ];
+const technologydata=[{value:1,label:"Java"}]
+  
  
   var [technologyspec,setTechnologyspec]=useState();
 var handleTechnologyspec=(e)=>{
   setTechnologyspec(Array.isArray(e)?e.map(x=>x.label):[]);
 }
 // console.log(technologyspec);
-  var technologyspecdata=[
-    {
-      value:1,
-      label: "Full Stack"
-    },
-    {
-      value:2,
-      label: "Front-End"
-    },
-    {
-      value:3,
-      label:"Back-End"
-    },
-    {
-      value:4,
-      label:"UI Designer"
-      
-    },
-    {
-      value:5,
-      label:"Architect"
-    },
-    {
-      value:6,
-      label:"Business Analysts"
-    }
-  ];
+const technologyspecdata=[{value:1,label:"Java"}]
+
+ 
 
   var [graduation,setGraduation]=useState();
 var handlegraduation=(e)=>{
   setGraduation(Array.isArray(e)?e.map(x=>x.label):[]);
+  SetResourceData({ ...resourcedata, graduationDegree: e.target.value })
+
 }
 // console.log(graduation);
-  var graduationdata=[
-    {
-      value:1,
-      label: "B.E"
-    },
-    {
-      value:2,
-      label: "B.Tech"
-    },
-    {
-      value:3,
-      label:"B.Sc"
-    },
-    {
-      value:4,
-      label:"B.A"
-      
-    }
-  ];
+ 
  
   var [postgraduation,setPostGraduation]=useState();
 var handlepostgraduation=(e)=>{
   setPostGraduation(Array.isArray(e)?e.map(x=>x.label):[]);
+  SetResourceData({ ...resourcedata, postgraduationDegree: e.target.value })
+
 }
 // console.log(postgraduation);
-  var postgraduationdata=[
-    {
-      value:1,
-      label: "M.E"
-    },
-    {
-      value:2,
-      label: "M.Tech"
-    },
-    {
-      value:3,
-      label:"M.Sc"
-    },
-    {
-      value:4,
-      label:"M.A"
-      
-    }
-  ];
+ 
  
   var [graduationspec,setGraduationspec]=useState();
 var handlegraduationspec=(e)=>{
   setGraduationspec(Array.isArray(e)?e.map(x=>x.label):[]);
+  SetResourceData({ ...resourcedata, graduationSpec: e.target.value })
+
 }
 // console.log(graduationspec);
-  var graduationspecdata=[
-    {
-      value:1,
-      label: "Computer Science"
-    },
-    {
-      value:2,
-      label: "Electronics & Telecommunication"
-    },
-    {
-      value:3,
-      label:"Mechanical"
-    },
-    {
-      value:4,
-      label:"Civil"
-    },
-    {
-      value:5,
-      label: "Commerce"
-    },
-    {
-      value:5,
-      label: "Arts"
-    }
-  ];
+ 
   
   var [postgraduationspec,setPostGraduationspec]=useState();
 var handlepostgraduationspec=(e)=>{
   setPostGraduationspec(Array.isArray(e)?e.map(x=>x.label):[]);
+  SetResourceData({ ...resourcedata, postgraduationSpec: e.target.value })
+
 }
 // console.log(postgraduationspec);
-  var postgraduationspecdata=[
-    {
-      value:1,
-      label: "Computer Science"
-    },
-    {
-      value:2,
-      label: "Electronics & Telecommunication"
-    },
-    {
-      value:3,
-      label:"Mechanical"
-    },
-    {
-      value:4,
-      label:"Civil"
-    },
-    {
-      value:5,
-      label: "Commerce"
-    },
-    {
-      value:5,
-      label: "Arts"
-    }
-  ]
+ 
 
     var [otherspecialization,setOtherspecialization]=useState();
 var handleotherspecialization=(e)=>{
   setOtherspecialization(Array.isArray(e)?e.map(x=>x.label):[]);
+  SetResourceData({ ...resourcedata, othergraduationSpec: e.target.value })
+
 }
 // console.log(otherspecialization);
-  var otherspecializationdata=[
-    {
-      value:1,
-      label: "Electronics"
-    },
-    {
-      value:2,
-      label: "Mechanical"
-    },
-    {
-      value:3,
-      label:"Computer"
-    }
-  ];
+
    
   var [otherqualification,setOtherqualification]=useState();
 var handleotherqualification=(e)=>{
   setOtherqualification(Array.isArray(e)?e.map(x=>x.label):[]);
+  SetResourceData({ ...resourcedata, othergraduationDegree: e.target.value })
+
 }
 // console.log(otherqualification);
-  var otherqualificationdata=[
-    {
-      value:1,
-      label: "10th"
-    },
-    {
-      value:2,
-      label: "12th"
-    },
-    {
-      value:3,
-      label:"Diploma"
-    }
-  ];
+  
  
 var [domain,setDomain]=useState();
 var handledomain=(e)=>{
@@ -304,30 +144,17 @@ var handledomain=(e)=>{
   const [Passport, setPassport] = useState(true);
   const [relocate, setRelocate] = useState(true)
 
-  const [state, setState] = useState([]);
-  const [city, setCity] = useState([]);
-
-  // const country = ["India", "USA", "Japan"];
-  const India = ["Karnataka", "Maharastra", "TamilNadu"];
-  const USA = ["California", "Texas", "Florida"];
-  const Japan = ["Hokkaido", "Tohoku", "Kanto"];
-  const Karnataka = ["Banglore"];
-  const Maharastra = ["Pune", "Mumbai"];
-  const TamilNadu = ["Chennai"];
-
-  const handlecountry = (e) => {
+  const [statedata,setStatedata]=useState([])
+  const handlecountry = async(e) => {
+    const countryresult=await axios.get(`http://localhost:8082/api/country/state/${countrydata.countryId}`)
+    setStatedata(countryresult.data)
     SetResourceData({ ...resourcedata, worklocationcountry: e.target.value });
   };
-  const handlestate = (e) => {
-    if (e.target.value === "Karnataka") {
-      setCity(Karnataka);
-    }
-    if (e.target.value === "Maharastra") {
-      setCity(Maharastra);
-    }
-    if (e.target.value === "TamilNadu") {
-      setCity(TamilNadu);
-    }
+
+  const [citydata,setCitydata]=useState([])
+  const handlestate = async(e) => {
+    const stateresult=await axios.get(`http://localhost:8082/api/country/state/city/${statedata.stateId}`)
+    setCitydata(stateresult.data)
     SetResourceData({ ...resourcedata, worklocationstate: e.target.value });
   };
 
@@ -511,13 +338,13 @@ var handledomain=(e)=>{
               <div className="col-sm-3">
                 <select
                   class="form-select form-select-m"
-                  onChange={handlecountry}
+                  onChange={()=>handlecountry()}
                 >
                   <option>Select Country </option>
                   {countrydata.map((item) => {
                     return (
-                      <option value={item.name} key={item.name}>
-                        {item.name}
+                      <option value={item.countryName} key={item.countryName}>
+                        {item.countryName}
                       </option>
                     );
                   })}
@@ -527,7 +354,7 @@ var handledomain=(e)=>{
                 Education Qualification:
               </lable>
               <div className="col-sm-3">
-                <Select isMulti options={educationqualification} onChange={handleSelect}></Select>
+                <Select isMulti options={qualification.map((item)=>({value:item.qualificationId,label:item.qualification}))} onChange={handlequalification}></Select>
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -540,13 +367,13 @@ var handledomain=(e)=>{
               <div className="col-sm-3">
                 <select
                   class="form-select form-select-m "
-                  onChange={handlestate}
+                  onChange={()=>handlestate()}
                 >
                   <option>Select State </option>
-                  {state.map((item) => {
+                  {statedata.map((item) => {
                     return (
-                      <option value={item} key={item}>
-                        {item}
+                      <option value={item.stateName} key={item.stateName}>
+                        {item.stateName}
                       </option>
                     );
                   })}
@@ -554,8 +381,8 @@ var handledomain=(e)=>{
               </div>
               <lable className="col-sm-2 col-form-lable">Graduation:</lable>
               <div className="col-sm-3">
-              <Select isMulti options={graduationdata} onChange={handlegraduation}></Select>
-                
+              <Select isMulti options={graduationdata.map((item)=>({value:item.degreeId,label:item.degreeName}))} onChange={handlegraduation}></Select>
+              
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -576,10 +403,10 @@ var handledomain=(e)=>{
                   }
                 >
                   <option>Select City </option>
-                  {city.map((item) => {
+                  {citydata.map((item) => {
                     return (
-                      <option value={item} key={item}>
-                        {item}
+                      <option value={item.cityName} key={item.cityName}>
+                        {item.cityName}
                       </option>
                     );
                   })}
@@ -589,7 +416,7 @@ var handledomain=(e)=>{
                 Graduation Specialization:
               </lable>
               <div className="col-sm-3">
-              <Select isMulti options={graduationspecdata} onChange={handlegraduationspec}></Select>
+              <Select isMulti options={graduationspecialization.map((item)=>({value:item.specializationId,label:item.specializationName}))} onChange={handlegraduationspec}></Select>
                
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
@@ -608,8 +435,9 @@ var handledomain=(e)=>{
                 Post-Graduation:
               </lable>
               <div className="col-sm-3">
-              <Select isMulti options={postgraduationdata} onChange={handlepostgraduation}></Select>
+              <Select isMulti options={postgraduationdata.map((item)=>({value:item.postgraduationId,label:item.postgraduationName}))} onChange={handlepostgraduation}></Select>
               </div>
+
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
             <br />
@@ -640,8 +468,9 @@ var handledomain=(e)=>{
                 Post-Graduation Specialization:
               </lable>
               <div className="col-sm-3">
-              <Select isMulti options={postgraduationspecdata} onChange={handlepostgraduationspec}></Select>
+              <Select isMulti options={postgraduationspecialization.map((item)=>({value:item.postgraduationspecId,label:item.postgraduationspecName}))} onChange={handlepostgraduationspec}></Select>
               </div>
+
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
             <br />
@@ -683,8 +512,9 @@ var handledomain=(e)=>{
                 Other Qualification:
               </lable>
               <div className="col-sm-3">
-              <Select isMulti options={otherqualificationdata} onChange={handleotherqualification}></Select>
-                
+              <Select isMulti options={othergraduationdata.map((item)=>({value:item.othergraduationId,label:item.othergraduationName}))} onChange={handleotherqualification}></Select>
+            
+
               </div>
               <lable className="col-sm-1 col-form-lable"></lable>
             </div>
@@ -726,7 +556,7 @@ var handledomain=(e)=>{
                 Other Specialization:
               </lable>
               <div className="col-sm-3">
-              <Select isMulti options={otherspecializationdata} onChange={handleotherspecialization}></Select>
+              <Select isMulti options={othergraduationspecialization.map((item)=>({value:item.otherId,label:item.otherName}))} onChange={handleotherspecialization}></Select>
               </div>
               
               <lable className="col-sm-1 col-form-lable"></lable>

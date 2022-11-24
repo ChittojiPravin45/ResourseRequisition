@@ -21,6 +21,8 @@ export const ResourceRequisition = () => {
     useState([]);
   const [employee, setEmployee] = useState([]);
   const [resource, setResource] = useState([]);
+  const [technologyData, setTechnologydata] =
+    useState([]);
 
   const getdata = async () => {
     const result = await axios.get("http://localhost:8080/api/viewdomains");
@@ -62,7 +64,11 @@ export const ResourceRequisition = () => {
     setEmployee(result10.data);
     const result11 = await axios.get("http://localhost:8080/api/viewResource");
     setResource(result11.data);
-    
+    console.log(result11);
+    const result12 = await axios.get(
+      "http://localhost:8080/api/viewTechnology?resource=BACKEND"
+    );
+    setTechnologydata(result12.data);
   };
 
   useEffect(() => {
@@ -77,32 +83,25 @@ export const ResourceRequisition = () => {
   // console.log(data);
 
   var [developer, setDeveloper] = useState();
-  const [technologyData, setTechnologydata] =useState([]);
-  var handleTypeofDeveloper = async(e) => {
+  var handleTypeofDeveloper = (e) => {
     let id = e.target.value;
-    const techdata=await axios.get(`http://localhost:8080/api/viewTechnology/${id}`)
-    setTechnologydata(techdata.data)
     setDeveloper(Array.isArray(e) ? e.map((x) => x.label) : []);
     SetResourceData({ ...resourcedata, resource: e.target.value });
 
   };
+  // console.log(developer);
+  // const typeOfDeveloper = [{ value: 1, label: "Full Stack" }];
 
   var [technology, setTechnology] = useState();
-  const [skilldata,setSkilldata]=useState([])
-  var handleTechnology = async(e) => {
-    let id = e.target.value;
-    const skill=await axios.get(`http://localhost:8080/api/viewSkills/${id}`)
-    setSkilldata(skill.data)
+  var handleTechnology = (e) => {
     setTechnology(Array.isArray(e) ? e.map((x) => x.label) : []);
-    SetResourceData({ ...resourcedata, technology: e.target.value });
-
   };
+  // console.log(technology);
+  // const technologydata = [{ value: 1, label: "Java" }];
 
   var [technologyspec, setTechnologyspec] = useState();
   var handleTechnologyspec = (e) => {
     setTechnologyspec(Array.isArray(e) ? e.map((x) => x.label) : []);
-    SetResourceData({ ...resourcedata, skills: e.target.value });
-
   };
   // console.log(technologyspec);
   const technologyspecdata = [{ value: 1, label: "Java" }];
@@ -361,7 +360,7 @@ export const ResourceRequisition = () => {
               <div className="col-sm-3">
                 <Select
                   isMulti
-                  options={skilldata.map((item)=>({value:item.skillId,label:item.name}))}
+                  options={technologyspecdata}
                   onChange={handleTechnologyspec}
                 ></Select>
               </div>

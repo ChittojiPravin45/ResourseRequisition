@@ -19,10 +19,10 @@ export const ResourceRequisition = () => {
   const [othergraduationdata, setOtherGraduationdata] = useState([]);
   const [othergraduationspecialization, setOtherGraduationspecialization] =
     useState([]);
-  const [noOfJRs, setNoOfJRs] = useState([]);
-  const [salesOrderNo, setSalesOrderNo] = useState([]);
-  // const [othergraduationspecialization, setOtherGraduationspecialization] =
-  //   useState([]);
+  const [employee, setEmployee] = useState([]);
+  const [resource, setResource] = useState([]);
+  const [technologyData, setTechnologydata] =
+    useState([]);
 
   const getdata = async () => {
     const result = await axios.get("http://localhost:8080/viewDomains");
@@ -59,14 +59,14 @@ export const ResourceRequisition = () => {
       "http://localhost:8082/api/otherqualificationSpecialization"
     );
     setOtherGraduationspecialization(result9.data);
-    const result10 = await axios.get("http://localhost:8082/api/noOfJRs");
-    setNoOfJRs(result10.data);
-    const result11 = await axios.get("http://localhost:8082/api/salesOrdrerNo");
-    setSalesOrderNo(result11.data);
-    // const result12 = await axios.get(
-    //   "http://localhost:8082/api/otherqualificationSpecialization"
-    // );
-    // setOtherGraduationspecialization(result12.data);
+    const result10 = await axios.get("http://localhost:8080/api/getEmployee");
+    setEmployee(result10.data);
+    const result11 = await axios.get("http://localhost:8080/api/viewResource");
+    setResource(result11.data);
+    const result12 = await axios.get(
+      "http://localhost:8080/api/viewTechnology"
+    );
+    setTechnologydata(result12.data);
   };
 
   useEffect(() => {
@@ -83,16 +83,18 @@ export const ResourceRequisition = () => {
   var [developer, setDeveloper] = useState();
   var handleTypeofDeveloper = (e) => {
     setDeveloper(Array.isArray(e) ? e.map((x) => x.label) : []);
+    SetResourceData({ ...resourcedata, resource: e.target.value });
+
   };
   // console.log(developer);
-  const typeOfDeveloper = [{ value: 1, label: "Full Stack" }];
+  // const typeOfDeveloper = [{ value: 1, label: "Full Stack" }];
 
   var [technology, setTechnology] = useState();
   var handleTechnology = (e) => {
     setTechnology(Array.isArray(e) ? e.map((x) => x.label) : []);
   };
   // console.log(technology);
-  const technologydata = [{ value: 1, label: "Java" }];
+  // const technologydata = [{ value: 1, label: "Java" }];
 
   var [technologyspec, setTechnologyspec] = useState();
   var handleTechnologyspec = (e) => {
@@ -213,7 +215,7 @@ export const ResourceRequisition = () => {
                   type="text"
                   className="form-control form-control-sm"
                   disabled
-                  placeholder="Employee Name"
+                  placeholder={employee.employeeName}
                   onChange={(e) =>
                     SetResourceData({
                       ...resourcedata,
@@ -247,7 +249,7 @@ export const ResourceRequisition = () => {
                   type="text"
                   className="form-control form-control-sm"
                   disabled
-                  placeholder="Employee ID"
+                  placeholder={employee.employeeId}
                   onChange={(e) =>
                     SetResourceData({
                       ...resourcedata,
@@ -302,7 +304,7 @@ export const ResourceRequisition = () => {
               <div className="col-sm-3">
                 <Select
                   isMulti
-                  options={typeOfDeveloper}
+                  options={resource.map((item)=>({value:item.resourceTypeId, lable:item.resourceType}))}
                   onChange={handleTypeofDeveloper}
                 ></Select>
               </div>
@@ -323,7 +325,7 @@ export const ResourceRequisition = () => {
               <div className="col-sm-3">
                 <Select
                   isMulti
-                  options={technologydata}
+                  options={technologyData.map((item)=>({value:item.technologyId,label:item.technologyName}))}
                   onChange={handleTechnology}
                 ></Select>
               </div>

@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Select from "react-select";
 
-
 export const ResourceRequisition = () => {
   const [resourcedata, SetResourceData] = useState({});
   // console.log(resourcedata)
@@ -20,42 +19,50 @@ export const ResourceRequisition = () => {
   const [othergraduationdata, setOtherGraduationdata] = useState([]);
   const [othergraduationspecialization, setOtherGraduationspecialization] =
     useState([]);
+  const [employee, setEmployee] = useState([]);
+  const [resource, setResource] = useState([]);
 
   const getdata = async () => {
-    const result = await axios.get("http://localhost:8080/viewDomains");
+    const result = await axios.get("http://localhost:8080/api/viewdomains");
     setViewDomainsdata(result.data);
     const result1 = await axios.get(
-      "http://localhost:8080/hiringtype/list-all-types"
+      "http://localhost:8080/api/list-all-hiring-types"
     );
     setHiringTypedata(result1.data);
-    const result2 = await axios.get("http://localhost:8082/api/country");
+    const result2 = await axios.get("http://localhost:8080/api/country");
+    
     setCounterdata(result2.data);
-    const result3 = await axios.get("http://localhost:8082/api/qualification");
+    const result3 = await axios.get("http://localhost:8080/api/qualification");
     setQualification(result3.data);
     const result4 = await axios.get(
-      "http://localhost:8082/api/qualificationDegree"
+      "http://localhost:8080/api/qualificationDegree"
     );
     setGraduationdata(result4.data);
     const result5 = await axios.get(
-      "http://localhost:8082/api/qualificationSpecialization"
+      "http://localhost:8080/api/qualificationSpecialization"
     );
     setGraduationspecialization(result5.data);
     const result6 = await axios.get(
-      "http://localhost:8082/api/postqualificationDegree"
+      "http://localhost:8080/api/postqualificationDegree"
     );
     setPostGraduationdata(result6.data);
     const result7 = await axios.get(
-      "http://localhost:8082/api/postqualificationSpecialization"
+      "http://localhost:8080/api/postqualificationSpecialization"
     );
     setPostGraduationspecialization(result7.data);
     const result8 = await axios.get(
-      "http://localhost:8082/api/otherqualificationDegree"
+      "http://localhost:8080/api/otherqualificationDegree"
     );
     setOtherGraduationdata(result8.data);
     const result9 = await axios.get(
-      "http://localhost:8082/api/otherqualificationSpecialization"
+      "http://localhost:8080/api/otherqualificationSpecialization"
     );
     setOtherGraduationspecialization(result9.data);
+    const result10 = await axios.get("http://localhost:8080/api/getEmployee");
+    setEmployee(result10.data);
+    const result11 = await axios.get("http://localhost:8080/api/viewResource");
+    setResource(result11.data);
+    
   };
 
   useEffect(() => {
@@ -70,22 +77,32 @@ export const ResourceRequisition = () => {
   // console.log(data);
 
   var [developer, setDeveloper] = useState();
-  var handleTypeofDeveloper = (e) => {
+  const [technologyData, setTechnologydata] =useState([]);
+  var handleTypeofDeveloper = async(e) => {
+    let id = e.target.value;
+    const techdata=await axios.get(`http://localhost:8080/api/viewTechnology/${id}`)
+    setTechnologydata(techdata.data)
     setDeveloper(Array.isArray(e) ? e.map((x) => x.label) : []);
+    SetResourceData({ ...resourcedata, resource: e.target.value });
+
   };
-  // console.log(developer);
-  const typeOfDeveloper = [{ value: 1, label: "Full Stack" }];
 
   var [technology, setTechnology] = useState();
-  var handleTechnology = (e) => {
+  const [skilldata,setSkilldata]=useState([])
+  var handleTechnology = async(e) => {
+    let id = e.target.value;
+    const skill=await axios.get(`http://localhost:8080/api/viewSkills/${id}`)
+    setSkilldata(skill.data)
     setTechnology(Array.isArray(e) ? e.map((x) => x.label) : []);
+    SetResourceData({ ...resourcedata, technology: e.target.value });
+
   };
-  // console.log(technology);
-  const technologydata = [{ value: 1, label: "Java" }];
 
   var [technologyspec, setTechnologyspec] = useState();
   var handleTechnologyspec = (e) => {
     setTechnologyspec(Array.isArray(e) ? e.map((x) => x.label) : []);
+    SetResourceData({ ...resourcedata, skills: e.target.value });
+
   };
   // console.log(technologyspec);
   const technologyspecdata = [{ value: 1, label: "Java" }];
@@ -143,8 +160,10 @@ export const ResourceRequisition = () => {
 
   const [statedata, setStatedata] = useState([]);
   const handlecountry = async (e) => {
+    let id = e.target.value;
+    console.log('ID:', id);
     const countryresult = await axios.get(
-      `http://localhost:8082/api/country/state/${countrydata.countryId}`
+      `http://localhost:8080/api/country/state/${id}`
     );
     setStatedata(countryresult.data);
     SetResourceData({ ...resourcedata, worklocationcountry: e.target.value });
@@ -152,8 +171,9 @@ export const ResourceRequisition = () => {
 
   const [citydata, setCitydata] = useState([]);
   const handlestate = async (e) => {
+    let id = e.target.value;
     const stateresult = await axios.get(
-      `http://localhost:8082/api/country/state/city/${statedata.stateId}`
+      `http://localhost:8080/api/country/state/city/${id}`
     );
     setCitydata(stateresult.data);
     SetResourceData({ ...resourcedata, worklocationstate: e.target.value });
@@ -178,14 +198,14 @@ export const ResourceRequisition = () => {
         <div className="col">
           <form action="">
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
               <button className="col-sm-1 btn-outline-primary btn-sm ">
                 NEW
               </button>
-              <lable className="col-sm-4 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-4 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">
                 Search Request No:
-              </lable>
+              </label>
               <div className="col-sm-2">
                 <input type="text" className="form-control form-control-sm" />
               </div>
@@ -195,14 +215,14 @@ export const ResourceRequisition = () => {
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable"> Employee Name:</lable>
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable"> Employee Name:</label>
               <div className="col-sm-3">
                 <input
                   type="text"
                   className="form-control form-control-sm"
                   disabled
-                  placeholder="Employee Name"
+                  placeholder={employee.employeeName}
                   onChange={(e) =>
                     SetResourceData({
                       ...resourcedata,
@@ -211,7 +231,7 @@ export const ResourceRequisition = () => {
                   }
                 />
               </div>
-              <lable className="col-sm-2 col-form-lable">Created On:</lable>
+              <label className="col-sm-2 col-form-lable">Created On:</label>
               <div className="col-sm-3">
                 <input
                   type="text"
@@ -225,18 +245,18 @@ export const ResourceRequisition = () => {
                   }
                 />
               </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">Employee ID:</lable>
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">Employee ID:</label>
               <div className="col-sm-3">
                 <input
                   type="text"
                   className="form-control form-control-sm"
                   disabled
-                  placeholder="Employee ID"
+                  placeholder={employee.employeeId}
                   onChange={(e) =>
                     SetResourceData({
                       ...resourcedata,
@@ -245,7 +265,7 @@ export const ResourceRequisition = () => {
                   }
                 />
               </div>
-              <lable className="col-sm-2 col-form-lable">Years Of Exp:</lable>
+              <label className="col-sm-2 col-form-lable">Years Of Exp:</label>
               <div className="col-sm-3">
                 <input
                   type="number"
@@ -259,12 +279,12 @@ export const ResourceRequisition = () => {
                 />
               </div>
 
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">Hiring Type:</lable>
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">Hiring Type:</label>
               <div className="col-sm-3">
                 <select
                   class="form-select form-select-m"
@@ -285,22 +305,22 @@ export const ResourceRequisition = () => {
                   })}
                 </select>
               </div>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-2 col-form-lable">
                 Type Of Developer:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <Select
                   isMulti
-                  options={typeOfDeveloper}
+                  options={resource.map((item)=>({value:item.resourceId, lable:item.resource}))}
                   onChange={handleTypeofDeveloper}
                 ></Select>
               </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">Requested By:</lable>
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">Requested By:</label>
               <div className="col-sm-3">
                 <input
                   type="text"
@@ -308,23 +328,23 @@ export const ResourceRequisition = () => {
                   disabled
                 />
               </div>
-              <lable className="col-sm-2 col-form-lable">Technology:</lable>
+              <label className="col-sm-2 col-form-lable">Technology:</label>
               <div className="col-sm-3">
                 <Select
                   isMulti
-                  options={technologydata}
+                  options={technologyData.map((item)=>({value:item.technologyId,label:item.technologyName}))}
                   onChange={handleTechnology}
                 ></Select>
               </div>
 
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">
                 Require Domain Knowledge:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <Select
                   isMulti
@@ -335,42 +355,42 @@ export const ResourceRequisition = () => {
                   onChange={handledomain}
                 ></Select>
               </div>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-2 col-form-lable">
                 Technology Specialization:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <Select
                   isMulti
-                  options={technologyspecdata}
+                  options={skilldata.map((item)=>({value:item.skillId,label:item.name}))}
                   onChange={handleTechnologyspec}
                 ></Select>
               </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">
                 Work Location Country:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <select
                   class="form-select form-select-m"
-                  onChange={() => handlecountry()}
+                  onChange={handlecountry}
                 >
                   <option>Select Country </option>
                   {countrydata.map((item) => {
                     return (
-                      <option value={item.countryName} key={item.countryName}>
-                        {item.countryName}
+                      <option value={item.country_id}  key={item.country_id}>
+                        {item.name}
                       </option>
                     );
                   })}
                 </select>
               </div>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-2 col-form-lable">
                 Education Qualification:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <Select
                   isMulti
@@ -381,30 +401,30 @@ export const ResourceRequisition = () => {
                   onChange={handlequalification}
                 ></Select>
               </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">
                 Work Location State:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <select
                   class="form-select form-select-m "
-                  onChange={() => handlestate()}
+                  onChange={handlestate}
                 >
                   <option>Select State </option>
                   {statedata.map((item) => {
                     return (
-                      <option value={item.stateName} key={item.stateName}>
-                        {item.stateName}
+                      <option value={item.state_id} key={item.state_id}>
+                        {item.name}
                       </option>
                     );
                   })}
                 </select>
               </div>
-              <lable className="col-sm-2 col-form-lable">Graduation:</lable>
+              <label className="col-sm-2 col-form-lable">Graduation:</label>
               <div className="col-sm-3">
                 <Select
                   isMulti
@@ -415,14 +435,14 @@ export const ResourceRequisition = () => {
                   onChange={handlegraduation}
                 ></Select>
               </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">
                 Work Location City:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <select
                   class="form-select form-select-m"
@@ -436,16 +456,16 @@ export const ResourceRequisition = () => {
                   <option>Select City </option>
                   {citydata.map((item) => {
                     return (
-                      <option value={item.cityName} key={item.cityName}>
-                        {item.cityName}
+                      <option value={item.name} key={item.name}>
+                        {item.name}
                       </option>
                     );
                   })}
                 </select>
               </div>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-2 col-form-lable">
                 Graduation Specialization:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <Select
                   isMulti
@@ -456,14 +476,14 @@ export const ResourceRequisition = () => {
                   onChange={handlegraduationspec}
                 ></Select>
               </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">
                 Resource Available Date:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <input
                   type="date"
@@ -478,9 +498,9 @@ export const ResourceRequisition = () => {
                 />
               </div>
 
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-2 col-form-lable">
                 Post-Graduation:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <Select
                   isMulti
@@ -492,14 +512,14 @@ export const ResourceRequisition = () => {
                 ></Select>
               </div>
 
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">
                 Time Zone Of Shifts:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <select
                   class="form-select form-select-m"
@@ -518,9 +538,9 @@ export const ResourceRequisition = () => {
                 </select>
               </div>
 
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-2 col-form-lable">
                 Post-Graduation Specialization:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <Select
                   isMulti
@@ -532,14 +552,14 @@ export const ResourceRequisition = () => {
                 ></Select>
               </div>
 
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">
                 Require To Work In Shift:
-              </lable>
+              </label>
               <div className="col-sm-1">
                 <div class="form-check">
                   <input
@@ -574,9 +594,9 @@ export const ResourceRequisition = () => {
                   </label>
                 </div>
               </div>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-2 col-form-lable">
                 Other Qualification:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <Select
                   isMulti
@@ -587,12 +607,12 @@ export const ResourceRequisition = () => {
                   onChange={handleotherqualification}
                 ></Select>
               </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">Passport:</lable>
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">Passport:</label>
               <div className="col-sm-1">
                 <div class="form-check">
                   <input
@@ -623,9 +643,9 @@ export const ResourceRequisition = () => {
                   </label>
                 </div>
               </div>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-2 col-form-lable">
                 Other Specialization:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <Select
                   isMulti
@@ -637,12 +657,12 @@ export const ResourceRequisition = () => {
                 ></Select>
               </div>
 
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">VISA Available:</lable>
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">VISA Available:</label>
               <div className="col-sm-1">
                 <div class="form-check">
                   <input
@@ -679,7 +699,7 @@ export const ResourceRequisition = () => {
                   </label>
                 </div>
               </div>
-              <lable className="col-sm-2 col-form-lable">*Positions: </lable>
+              <label className="col-sm-2 col-form-lable">*Positions: </label>
               <div className="col-sm-1">
                 <input
                   type="text"
@@ -694,20 +714,20 @@ export const ResourceRequisition = () => {
                 />
               </div>
 
-              <lable className="col-sm-3 col-form-lable"></lable>
+              <label className="col-sm-3 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">
                 Approver Employee ID:
-              </lable>
+              </label>
 
               <div className="col-sm-2">
                 <input type="text" className="form-control form-control-sm" />
               </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">Sales Order No:</lable>
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">Sales Order No:</label>
               <div className="col-sm-2">
                 <input
                   type="text"
@@ -721,28 +741,28 @@ export const ResourceRequisition = () => {
                 />
               </div>
 
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">
                 Approver Employee Name:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <input type="text" className="form-control form-control-sm" />
               </div>
-              <lable className="col-sm-2 col-form-lable">JRs No:</lable>
+              <label className="col-sm-2 col-form-lable">JRs No:</label>
               <div className="col-sm-1">
                 <input type="text" className="form-control form-control-sm" />
               </div>
 
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">Approved on:</lable>
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">Approved on:</label>
               <div className="col-sm-2">
                 <input
                   type="text"
@@ -750,11 +770,11 @@ export const ResourceRequisition = () => {
                   disabled
                 />
               </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
 
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-2 col-form-lable">
                 Ready To Relocate:
-              </lable>
+              </label>
               <div className="col-sm-1">
                 <div class="form-check">
                   <input
@@ -785,14 +805,14 @@ export const ResourceRequisition = () => {
                   </label>
                 </div>
               </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
             <div className="form-group row">
-              <lable className="col-sm-1 col-form-lable"></lable>
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-1 col-form-lable"></label>
+              <label className="col-sm-2 col-form-lable">
                 Attach JD Document:
-              </lable>
+              </label>
               <div className="col-sm-3">
                 <div className="custom-file-input">
                   <input
@@ -804,9 +824,9 @@ export const ResourceRequisition = () => {
                 </div>
               </div>
 
-              <lable className="col-sm-2 col-form-lable">
+              <label className="col-sm-2 col-form-lable">
                 If No To Relocate/Days:
-              </lable>
+              </label>
               <div className="col-sm-1">
                 <input
                   type="number"
@@ -820,24 +840,24 @@ export const ResourceRequisition = () => {
                   }
                 />
               </div>
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
             </div>
             <br />
 
             <br />
             <div className="form-group row">
-              <lable className="col-sm-2 col-form-lable"></lable>
+              <label className="col-sm-2 col-form-lable"></label>
               <button
                 className="col-sm-1 btn-outline-warning btn-sm "
                 onClick={() => handlesave(resourcedata)}
               >
                 SAVE
               </button>
-              <lable className="col-sm-1 col-form-lable"></lable>
+              <label className="col-sm-1 col-form-lable"></label>
               <button className="col-sm-1 btn-outline-success btn-sm ">
                 Submit
               </button>
-              <lable className="col-sm-4 col-form-lable"></lable>
+              <label className="col-sm-4 col-form-lable"></label>
               <button className="col-sm-1 btn-outline-danger btn-sm ">
                 Delete
               </button>

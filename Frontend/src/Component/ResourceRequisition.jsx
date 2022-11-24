@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Select from "react-select";
 
-
 export const ResourceRequisition = () => {
   const [resourcedata, SetResourceData] = useState({});
   // console.log(resourcedata)
@@ -20,6 +19,10 @@ export const ResourceRequisition = () => {
   const [othergraduationdata, setOtherGraduationdata] = useState([]);
   const [othergraduationspecialization, setOtherGraduationspecialization] =
     useState([]);
+  const [noOfJRs, setNoOfJRs] = useState([]);
+  const [salesOrderNo, setSalesOrderNo] = useState([]);
+  // const [othergraduationspecialization, setOtherGraduationspecialization] =
+  //   useState([]);
 
   const getdata = async () => {
     const result = await axios.get("http://localhost:8080/viewDomains");
@@ -56,6 +59,14 @@ export const ResourceRequisition = () => {
       "http://localhost:8082/api/otherqualificationSpecialization"
     );
     setOtherGraduationspecialization(result9.data);
+    const result10 = await axios.get("http://localhost:8082/api/noOfJRs");
+    setNoOfJRs(result10.data);
+    const result11 = await axios.get("http://localhost:8082/api/salesOrdrerNo");
+    setSalesOrderNo(result11.data);
+    // const result12 = await axios.get(
+    //   "http://localhost:8082/api/otherqualificationSpecialization"
+    // );
+    // setOtherGraduationspecialization(result12.data);
   };
 
   useEffect(() => {

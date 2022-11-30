@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import Swal from "sweetalert2"
 import { useEffect } from "react";
 import { useState } from "react";
 import Select from "react-select";
@@ -284,6 +285,11 @@ SetResourceData({ ...resourcedata, technologyData: str1 });
     e.preventDefault();
     const resourceResult = axios.post(`http://localhost:8080/api/saveResourceRequirement`, resourcedata );
       setAlertsubmit(true)
+      Swal.fire({
+        title:"Submitted successfully",
+        text:"Thank you",
+        type:"success"
+      })
       console.log("resourceResult save" ,resourcedata);
 //     localStorage.setItem(
 //       "resourcerequisitiondata",

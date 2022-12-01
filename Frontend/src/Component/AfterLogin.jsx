@@ -1,5 +1,6 @@
 import React from "react"
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 
 export const AfterLogin=()=>{
@@ -13,11 +14,16 @@ export const AfterLogin=()=>{
         nevigate("/temprrform")
     }
     return(
-        <div style={{width:"25%",height:"25%",alighItem:"Center"}}>
+        <div className="afterlogin">
             <label htmlFor="">Create New Form</label>
-            <button onClick={createNewform}>Create</button>
+            <br />
+            <Button variant="contained" onClick={createNewform}>Create</Button>
+            <br />
+            <br />
             <label htmlFor="">Continue with Existing Data</label>
-            <button onClick={continueOldForm}>Load</button>
+            <br />
+            <Button variant="contained" onClick={continueOldForm}>Load</Button>
+
         </div>
     )
 

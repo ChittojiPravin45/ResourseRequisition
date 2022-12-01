@@ -6,6 +6,7 @@ import { useState } from "react";
 import Select from "react-select";
 
 export const ResourceRequisition = () => {
+  const employeedata=JSON.parse(sessionStorage.getItem("logindata"))
 
   const [resourcedata, SetResourceData] = useState({});
   const [selectedList, setSelectedList] = useState([]);
@@ -81,6 +82,7 @@ SetResourceData({ ...resourcedata, technologyData: str1 });
     setViewDomainsdata(result.data);
     
     const result1 = await axios.get("http://localhost:8080/api/hiringType");
+    console.log("hiringType------->"+result1)
     setHiringTypedata(result1.data);
     const result2 = await axios.get("http://localhost:8080/api/country");
     setCountryData(result2.data);
@@ -281,21 +283,87 @@ SetResourceData({ ...resourcedata, technologyData: str1 });
   };
   console.log(resourcedata)
   const [alertsubmit,setAlertsubmit]=useState(false)
-  const handlesave = (e) => {
+  const handlesubmit = (e) => {
+    let eid=employeedata.employeeId
+    // let uid=employeedata.unitId
+    // let uname=employeedata.unitName
+    // let aid=employeedata.managerId
+    
+    SetResourceData({...resourcedata,employee:{employeeId:eid} });
+    // SetResourceData({...resourcedata,unitId:uid});
+    // SetResourceData({...resourcedata,unitName:uname});
+    // SetResourceData({...resourcedata,approverId:aid});
     e.preventDefault();
-    const resourceResult = axios.post(`http://localhost:8080/api/saveResourceRequirement`, resourcedata );
+    const resourceResult = axios.post(`http://localhost:8080/api/saveResourceRequirement/0`, resourcedata );
       setAlertsubmit(true)
       Swal.fire({
         title:"Submitted successfully",
         text:"Thank you",
         type:"success"
       })
-      console.log("resourceResult save" ,resourcedata);
+      // console.log("resourceResult save" ,resourcedata);
 //     localStorage.setItem(
 //       "resourcerequisitiondata",
 //       // JSON.stringify(resourcedata)
 // );
   };
+
+  const handlesave=async()=>{
+    let eid=employeedata.employeeId
+    SetResourceData({...resourcedata,employee:{employeeId:eid} });
+
+    const submitresult=await axios.post(`http://localhost:8080/api/saveTempResourceRequirement/0`,resourcedata)
+    // console.log(submitresult)
+  }
+  const [experience,setExperience]=useState()
+  const [saleorder,setSaleorder]=useState()
+  const [jrno,setJrno]=useState()
+  const saved=JSON.parse(sessionStorage.getItem("savedData"))
+  let exp=saved[0].experience
+  
+  function setdata(){
+    setExperience(exp)
+    setSaleorder(saved[0].salesOrderNo)
+    setJrno(saved[0].noOfJRs)
+  }
+  useEffect(()=>{
+    setdata()
+  },[])
+  //noOfJRs
+  const handleExp=(e)=>{
+
+    e.preventDefault();
+    setExperience(e.target.value)
+    SetResourceData({
+      ...resourcedata,
+      experience: e.target.value,
+    })
+    
+  }
+  const handleSaleorder=(e)=>{
+
+    e.preventDefault();
+    setSaleorder(e.target.value)
+    SetResourceData({
+      ...resourcedata,
+      salesOrderNo: e.target.value,
+    })
+    
+  }
+  const handleJrno=(e)=>{
+
+    e.preventDefault();
+    setJrno(e.target.value)
+    SetResourceData({
+      ...resourcedata,
+      noOfJRs: e.target.value,
+    })
+    
+  }
+  
+  console.log(resourcedata)
+  // let experience=saved[0].experience
+  // console.log(experience)
   return (
     <div className="container my-5">
       <div className="text-center">
@@ -332,7 +400,8 @@ SetResourceData({ ...resourcedata, technologyData: str1 });
                 <input
                   type="text"
                   className="form-control form-control-sm"
-                  // disabled
+                  disabled
+                  value={employeedata.employeeName}
                   placeholder={employee.employeeName}
                   onChange={(e) =>
                     SetResourceData({
@@ -366,12 +435,12 @@ SetResourceData({ ...resourcedata, technologyData: str1 });
                 <input
                   type="number"
                   className="form-control form-control-sm"
-                  // disabled
-                  placeholder={employee.employeeId}
+                  disabled
+                  value={employeedata.employeeId}
                   onChange={(e) =>
                     SetResourceData({
                       ...resourcedata,
-                      employee: {employeeId:e.target.value},
+                      employee: e.target.value,
                     })
                   }
                 />
@@ -382,14 +451,9 @@ SetResourceData({ ...resourcedata, technologyData: str1 });
               <div className="col-sm-1">
                 <input
                   type="number"
+                  value={experience}
                   className="form-control form-control-m"
-                  onChange={(e) =>
-                    SetResourceData({
-                      ...resourcedata,
-                      experience: e.target.value,
-                    })
-                  }
-                />
+                  onChange={handleExp} />
               </div>
 
               <label className="col-sm-3 col-form-lable"></label>
@@ -448,6 +512,7 @@ SetResourceData({ ...resourcedata, technologyData: str1 });
                   type="text"
                   className="form-control form-control-m"
                   disabled
+                  value={employeedata.unitName}
                 />
               </div>
               <label className="col-sm-2 col-form-lable">Technology:</label>
@@ -941,7 +1006,12 @@ SetResourceData({ ...resourcedata, technologyData: str1 });
               </label>
 
               <div className="col-sm-2">
-                <input type="text" className="form-control form-control-sm"  disabled/>
+                <input type="text" className="form-control form-control-sm"
+                value={employeedata.managerId}
+                
+
+
+                disabled/>
               </div>
               <label className="col-sm-1 col-form-lable"></label>
               <label className="col-sm-2 col-form-lable">Sales Order No:</label>
@@ -949,12 +1019,8 @@ SetResourceData({ ...resourcedata, technologyData: str1 });
                 <input
                   type="number"
                   className="form-control form-control-sm"
-                  onChange={(e) =>
-                    SetResourceData({
-                      ...resourcedata,
-                      salesOrderNo: e.target.value,
-                    })
-                  }
+                  value={saleorder}
+                  onChange={handleSaleorder}
                 />
               </div>
 
@@ -967,16 +1033,16 @@ SetResourceData({ ...resourcedata, technologyData: str1 });
                 Approver Employee Name:
               </label>
               <div className="col-sm-3">
-                <input type="text" className="form-control form-control-sm" disabled/>
+                <input type="text" className="form-control form-control-sm"
+                 value={employeedata.managerName}
+
+                disabled/>
               </div>
               <label className="col-sm-2 col-form-lable">JRs No:</label>
               <div className="col-sm-1">
                 <input type="number" className="form-control form-control-sm" 
-                onChange={(e) =>
-                  SetResourceData({
-                    ...resourcedata,
-                    noOfJRs: e.target.value,
-                  })}
+                onChange={handleJrno}
+                value={jrno}
                   />
               </div>
 
@@ -1087,12 +1153,12 @@ SetResourceData({ ...resourcedata, technologyData: str1 });
               <label className="col-sm-2 col-form-lable"></label>
               <button
                 className="col-sm-1 btn-outline-warning btn-sm "
-                onClick={handlesave}
+                onClick={handlesubmit}
               >
                 SUBMIT
               </button>
               <label className="col-sm-1 col-form-lable"></label>
-              <button className="col-sm-1 btn-outline-success btn-sm ">
+              <button className="col-sm-1 btn-outline-success btn-sm " onClick={handlesave}>
                 SAVE
               </button>
               <label className="col-sm-4 col-form-lable"></label>

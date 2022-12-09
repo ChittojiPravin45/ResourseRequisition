@@ -39,6 +39,7 @@ SetResourceData({ ...resourcedata, technologyData: str1 });
 
   }
   useEffect(()=>{
+    
     handleTech()
   },[selectedList])
 
